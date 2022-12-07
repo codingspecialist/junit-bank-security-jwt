@@ -4,15 +4,17 @@
 - 회원가입
 - 로그인
 - 계좌등록
-- 본인계좌목록보기 (User select, Account select)
+- 본인계좌목록보기 
+> (User select, Account select)
 - 입금하기
 - 출금하기
 - 이체하기
-- 입금목록보기 (Transaction select)
-- 출금목록보기 (Transaction select) 
-- 입출금목록보기 (Transaction select or쿼리) 
-- 본인계좌상세보기 (Account select user join fetch, (입출금목록보기)) 
-- 입금, 출금, 목록보기 (동적쿼리) - 보너스 강의
+- 입출금목록보기 동적쿼리
+> (Transaction select, or query, withdrawAccount left join fetch,  depositAccount left join fetch)
+- 본인계좌상세보기 
+> (Account select, user join fetch, (입출금목록보기))   
+- vs
+> (Account select, user join fetch, (양방향매핑 + 컬렉션 concat/sort + batchsize 100 in query))
 
 ## 기술스택
 - Springboot 2.7.6
