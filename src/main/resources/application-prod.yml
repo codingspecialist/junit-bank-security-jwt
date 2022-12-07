@@ -1,0 +1,17 @@
+server:
+  port: 5000
+
+spring:
+  datasource:
+    url: jdbc:mariadb://${rds.hostname}:${rds.port}/${rds.db.name} 
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ${rds.username}
+    password: ${rds.password}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+
+logging:
+  level:
+    '[shop.mtcoding.bank]': INFO
