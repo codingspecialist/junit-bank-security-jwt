@@ -15,8 +15,9 @@
 [table-design](table-design.pdf)
 
 ## 유효성검사
-[regex](regex.pdf)
-https://coding-factory.tistory.com/529
+> [regex](regex.pdf)
+> [validation](validation.png)
+> https://coding-factory.tistory.com/529
 
 ## 기능정리
 - 회원가입
