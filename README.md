@@ -4,6 +4,7 @@
 [ux-design](ux-design.pdf)
 
 ## 테이블설계
+[table-design](table-design.pdf)
 
 ## 기능정리
 - 회원가입
@@ -78,7 +79,24 @@ create table transaction (
 
 ## 개발 더미 데이터 (통합 or 레포)
 ```java
-
+public void dataSetting() {
+    User ssarUser = userRepository.save(newUser("ssar"));
+    User cosUser = userRepository.save(newUser("cos"));
+    User love = userRepository.save(newUser("love"));
+    Account ssarAccount = accountRepository.save(newAccount(1111L, "쌀", ssarUser));
+    Account cosAccount = accountRepository.save(newAccount(2222L, "코스", cosUser));
+    Account loveAccount = accountRepository.save(newAccount(3333L, "러브", love));
+    Transaction withdrawTransaction1 = transactionRepository
+                    .save(newWithdrawTransaction(100L, ssarAccount));
+    Transaction depositTransaction1 = transactionRepository
+                    .save(newDepositTransaction(100L, cosAccount));
+    Transaction transferTransaction1 = transactionRepository
+                    .save(newTransferTransaction(100L, ssarAccount, cosAccount));
+    Transaction transferTransaction2 = transactionRepository
+                    .save(newTransferTransaction(100L, ssarAccount, loveAccount));
+    Transaction transferTransaction3 = transactionRepository
+                    .save(newTransferTransaction(100L, cosAccount, ssarAccount));
+}
 ```
 ## 테스트 더미 데이터 (서비스)
 ```java
