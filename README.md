@@ -1,7 +1,7 @@
 # 입출금이체 프로그램
 
 ## 화면설계
-[ux-design](ux-desigin.pdf)
+[ux-design](ux-design.pdf)
 
 ## 테이블설계
 
