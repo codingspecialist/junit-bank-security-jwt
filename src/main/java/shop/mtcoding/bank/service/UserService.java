@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.bank.domain.user.User;
-import shop.mtcoding.bank.domain.user.UserEnum;
 import shop.mtcoding.bank.domain.user.UserRepository;
 import shop.mtcoding.bank.dto.user.UserReqDto.UserJoinReqDto;
 import shop.mtcoding.bank.dto.user.UserRespDto.UserJoinRespDto;

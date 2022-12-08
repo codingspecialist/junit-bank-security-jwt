@@ -3,8 +3,8 @@
 - UserRepository findByUsername() 테스트 - 통과
 - UserService 회원가입 테스트
 - UserApiController 회원가입 테스트
-- CustomApiExceptionAdvice 생성 및 CustomApiException
 - CustomValidationAdvice 생성 및 CustomValidationException 및 ReqDto 유효성 검사
+- CustomApiExceptionAdvice 생성 및 CustomApiException
 - JwtAuthentication 테스트
 - JwtAuthorization 테스트
 
@@ -13,6 +13,10 @@
 
 ## 테이블설계
 [table-design](table-design.pdf)
+
+## 유효성검사
+[regex](regex.pdf)
+https://coding-factory.tistory.com/529
 
 ## 기능정리
 - 회원가입

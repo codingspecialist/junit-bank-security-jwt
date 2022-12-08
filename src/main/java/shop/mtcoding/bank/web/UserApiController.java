@@ -1,7 +1,10 @@
 package shop.mtcoding.bank.web;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +21,7 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody UserJoinReqDto userJoinReqDto) {
+    public ResponseEntity<?> join(@RequestBody @Valid UserJoinReqDto userJoinReqDto, BindingResult bindingResult) {
         UserJoinRespDto userJoinRespDto = userService.회원가입(userJoinReqDto);
         return new ResponseEntity<>(new ResponseDto<>("회원가입 성공", userJoinRespDto), HttpStatus.CREATED);
     }

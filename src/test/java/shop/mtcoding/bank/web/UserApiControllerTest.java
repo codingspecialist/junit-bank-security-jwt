@@ -34,14 +34,10 @@ public class UserApiControllerTest extends DummyObject {
     public void join_test() throws Exception {
         // given
         UserJoinReqDto userJoinReqDto = new UserJoinReqDto();
-        String emailTemp = "a";
-        for (int i = 0; i < 256; i++) {
-            emailTemp += "a";
-        }
         userJoinReqDto.setUsername("love");
         userJoinReqDto.setPassword("1234");
-        userJoinReqDto.setEmail(emailTemp + "@nate.com");
-        userJoinReqDto.setFullname("love");
+        userJoinReqDto.setEmail("love@nate.com");
+        userJoinReqDto.setFullname("러브");
 
         String requestBody = om.writeValueAsString(userJoinReqDto);
         System.out.println("테스트 : " + requestBody);
