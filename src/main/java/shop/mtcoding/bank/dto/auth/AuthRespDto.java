@@ -1,4 +1,4 @@
-package shop.mtcoding.bank.dto;
+package shop.mtcoding.bank.dto.auth;
 
 import lombok.Getter;
 import lombok.Setter;
