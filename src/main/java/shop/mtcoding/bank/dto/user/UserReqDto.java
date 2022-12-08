@@ -1,5 +1,7 @@
 package shop.mtcoding.bank.dto.user;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import lombok.Getter;
 import lombok.Setter;
 import shop.mtcoding.bank.domain.user.User;
@@ -9,6 +11,7 @@ public class UserReqDto {
     @Setter
     @Getter
     public static class UserJoinReqDto {
+
         private String username;
         private String password;
         private String email;

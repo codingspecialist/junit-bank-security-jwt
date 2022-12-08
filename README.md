@@ -1,5 +1,13 @@
 # 입출금이체 프로그램
 
+- UserRepository findByUsername() 테스트 - 통과
+- UserService 회원가입 테스트
+- UserApiController 회원가입 테스트
+- CustomApiExceptionAdvice 생성 및 CustomApiException
+- CustomValidationAdvice 생성 및 CustomValidationException 및 ReqDto 유효성 검사
+- JwtAuthentication 테스트
+- JwtAuthorization 테스트
+
 ## 화면설계
 [ux-design](ux-design.pdf)
 
