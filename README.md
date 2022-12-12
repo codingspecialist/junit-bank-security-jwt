@@ -1,9 +1,9 @@
 # 입출금이체 프로그램
 
 - UserRepository findByUsername() 테스트 - 통과
-- UserService 회원가입 테스트
-- UserApiController 회원가입 테스트
-- CustomValidationAdvice 생성 및 CustomValidationException 및 ReqDto 유효성 검사
+- UserService 회원가입 테스트 - 통과
+- UserApiController 회원가입 테스트 - 통과
+- CustomValidationAdvice 생성 및 CustomValidationException 및 ReqDto 유효성 검사 - 통과
 - CustomApiExceptionAdvice 생성 및 CustomApiException
 - JwtAuthentication 테스트
 - JwtAuthorization 테스트

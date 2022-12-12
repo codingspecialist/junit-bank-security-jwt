@@ -9,6 +9,7 @@ import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
 import shop.mtcoding.bank.dto.user.UserReqDto.UserJoinReqDto;
 import shop.mtcoding.bank.dto.user.UserRespDto.UserJoinRespDto;
+import shop.mtcoding.bank.handler.ex.CustomApiException;
 
 /*
  * @Transactional 어노테이션이 없으면
@@ -28,6 +29,13 @@ public class UserService {
         String rawPassword = userJoinReqDto.getPassword();
         String encPassword = passwordEncoder.encode(rawPassword);
         userJoinReqDto.setPassword(encPassword);
+
+        // 동일 유저 검사
+        boolean isSameUser = userRepository.findByUsername(userJoinReqDto.getUsername()).isPresent();
+
+        if (isSameUser) {
+            throw new CustomApiException("동일한 username이 존재합니다");
+        }
 
         // action
         User userPS = userRepository.save(userJoinReqDto.toEntity());

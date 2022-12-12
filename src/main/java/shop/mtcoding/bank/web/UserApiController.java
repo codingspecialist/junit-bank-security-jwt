@@ -23,6 +23,6 @@ public class UserApiController {
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody @Valid UserJoinReqDto userJoinReqDto, BindingResult bindingResult) {
         UserJoinRespDto userJoinRespDto = userService.회원가입(userJoinReqDto);
-        return new ResponseEntity<>(new ResponseDto<>("회원가입 성공", userJoinRespDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", userJoinRespDto), HttpStatus.CREATED);
     }
 }

@@ -16,7 +16,7 @@ public class CustomResponseUtil {
     public static void success(HttpServletResponse response, Object dto) {
         try {
             ObjectMapper om = new ObjectMapper();
-            ResponseDto<?> responseDto = new ResponseDto<>("로그인 성공", dto);
+            ResponseDto<?> responseDto = new ResponseDto<>(1, "로그인 성공", dto);
             String responseBody = om.writeValueAsString(responseDto);
             response.setContentType("application/json; charset=utf-8");
             response.setStatus(200);
@@ -30,7 +30,7 @@ public class CustomResponseUtil {
     public static void fail(HttpServletResponse response, String msg) {
         try {
             ObjectMapper om = new ObjectMapper();
-            ResponseDto<?> responseDto = new ResponseDto<>(msg, null);
+            ResponseDto<?> responseDto = new ResponseDto<>(-1, msg, null);
             String responseBody = om.writeValueAsString(responseDto);
             response.setContentType("application/json; charset=utf-8");
             response.setStatus(400);
@@ -44,7 +44,7 @@ public class CustomResponseUtil {
     public static void forbidden(HttpServletResponse response, String msg) {
         try {
             ObjectMapper om = new ObjectMapper();
-            ResponseDto<?> responseDto = new ResponseDto<>(msg, null);
+            ResponseDto<?> responseDto = new ResponseDto<>(-1, msg, null);
             String responseBody = om.writeValueAsString(responseDto);
             response.setContentType("application/json; charset=utf-8");
             response.setStatus(403);
