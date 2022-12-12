@@ -7,7 +7,7 @@
 - CustomApiExceptionAdvice 생성 및 CustomApiException - 통과 (회원가입 유저네임 중복 테스트)
 - Jwt Create, Verify 테스트 - 통과
 - JwtAuthentication(로그인) 테스트 - 통과
-- JwtAuthorization(인가) 테스트
+- JwtAuthorization(인가) 테스트 - 통과 (ROLE_ 안붙여도 된다 이제!! - 문서에 나옴)
 - Account 계좌생성
 - Account 목록보기
 
