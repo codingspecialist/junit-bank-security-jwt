@@ -6,8 +6,10 @@
 - CustomValidationAdvice 생성 및 CustomValidationException 및 ReqDto 유효성 검사 - 통과
 - CustomApiExceptionAdvice 생성 및 CustomApiException - 통과 (회원가입 유저네임 중복 테스트)
 - Jwt Create, Verify 테스트 - 통과
-- JwtAuthentication 테스트
-- JwtAuthorization 테스트
+- JwtAuthentication(로그인) 테스트 - 통과
+- JwtAuthorization(인가) 테스트
+- Account 계좌생성
+- Account 목록보기
 
 
 ## 화면설계
