@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,6 +31,7 @@ import shop.mtcoding.bank.dto.auth.AuthReqDto.LoginReqDto;
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 public class JwtAuthenticationFilterTest extends DummyObject {
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private static final String APPLICATION_JSON_UTF8 = "application/json; charset=utf-8";
 
     @Autowired
@@ -50,15 +53,15 @@ public class JwtAuthenticationFilterTest extends DummyObject {
         loginReqDto.setUsername("ssar");
         loginReqDto.setPassword("1234");
         String requestBody = om.writeValueAsString(loginReqDto);
-        System.out.println("테스트 : " + requestBody);
+        log.debug("테스트 : " + requestBody);
 
         // when
         ResultActions resultActions = mvc
                 .perform(post("/login").content(requestBody).contentType(APPLICATION_JSON_UTF8));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         String token = resultActions.andReturn().getResponse().getHeader("Authorization");
-        System.out.println("테스트 : " + token);
-        System.out.println("테스트 : " + responseBody);
+        log.debug("테스트 : " + token);
+        log.debug("테스트 : " + responseBody);
 
         // then
         resultActions.andExpect(status().isOk());

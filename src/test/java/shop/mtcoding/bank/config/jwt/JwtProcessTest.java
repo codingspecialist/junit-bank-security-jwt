@@ -4,12 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import shop.mtcoding.bank.config.auth.LoginUser;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserEnum;
 
 public class JwtProcessTest {
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Test
     public void create_test() {
@@ -19,7 +22,7 @@ public class JwtProcessTest {
 
         // when
         String token = JwtProcess.create(loginUser);
-        System.out.println("테스트 : " + token);
+        log.debug("테스트 : " + token);
 
         // then
         assertTrue(token.startsWith(JwtVO.TOKEN_PREFIX));
@@ -33,7 +36,7 @@ public class JwtProcessTest {
 
         // when
         LoginUser loginUser = JwtProcess.verify(token);
-        System.out.println("테스트 : " + loginUser.getUser().getId());
+        log.debug("테스트 : " + loginUser.getUser().getId());
 
         // then
         assertThat(loginUser.getUser().getId()).isEqualTo(1L);

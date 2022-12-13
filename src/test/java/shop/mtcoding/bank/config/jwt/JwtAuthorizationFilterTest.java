@@ -4,6 +4,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +22,7 @@ import shop.mtcoding.bank.domain.user.UserEnum;
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 public class JwtAuthorizationFilterTest {
+    private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
     private MockMvc mvc;
 
@@ -29,7 +32,7 @@ public class JwtAuthorizationFilterTest {
         User user = User.builder().id(1L).role(UserEnum.CUSTOMER).build();
         LoginUser loginUser = new LoginUser(user);
         String token = JwtProcess.create(loginUser);
-        System.out.println("테스트 : " + token);
+        log.debug("테스트 : " + token);
 
         // when
         ResultActions resultActions = mvc
@@ -59,7 +62,7 @@ public class JwtAuthorizationFilterTest {
         User user = User.builder().id(1L).role(UserEnum.ADMIN).build(); // CUSTOMER, ADMIN 변경해서 해보자
         LoginUser loginUser = new LoginUser(user);
         String token = JwtProcess.create(loginUser);
-        System.out.println("테스트 : " + token);
+        log.debug("테스트 : " + token);
 
         // when
         ResultActions resultActions = mvc

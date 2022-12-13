@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +28,7 @@ import shop.mtcoding.bank.dto.user.UserReqDto.UserJoinReqDto;
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 public class UserApiControllerTest extends DummyObject {
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private static final String APPLICATION_JSON_UTF8 = "application/json; charset=utf-8";
 
     @Autowired
@@ -50,13 +53,13 @@ public class UserApiControllerTest extends DummyObject {
         userJoinReqDto.setFullname("러브");
 
         String requestBody = om.writeValueAsString(userJoinReqDto);
-        System.out.println("테스트 : " + requestBody);
+        log.debug("테스트 : " + requestBody);
 
         // when
         ResultActions resultActions = mvc
                 .perform(post("/join").content(requestBody).contentType(APPLICATION_JSON_UTF8));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : " + responseBody);
+        log.debug("테스트 : " + responseBody);
         // then
         resultActions.andExpect(status().isCreated());
     }
@@ -71,13 +74,13 @@ public class UserApiControllerTest extends DummyObject {
         userJoinReqDto.setFullname("쌀");
 
         String requestBody = om.writeValueAsString(userJoinReqDto);
-        System.out.println("테스트 : " + requestBody);
+        log.debug("테스트 : " + requestBody);
 
         // when
         ResultActions resultActions = mvc
                 .perform(post("/join").content(requestBody).contentType(APPLICATION_JSON_UTF8));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : " + responseBody);
+        log.debug("테스트 : " + responseBody);
         // then
         resultActions.andExpect(status().isBadRequest());
     }

@@ -40,9 +40,6 @@ public class Account {
     @Column(nullable = false)
     private Long balance; // 잔액 (디폴트 값 1000원)
 
-    @Column(nullable = false)
-    private Boolean isActive; // 계좌 활성화 여부
-
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
@@ -55,13 +52,12 @@ public class Account {
     private LocalDateTime createdAt;
 
     @Builder
-    public Account(Long id, Long number, String password, Long balance, Boolean isActive, User user,
+    public Account(Long id, Long number, String password, Long balance, User user,
             LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
         this.number = number;
         this.password = password;
         this.balance = balance;
-        this.isActive = isActive;
         this.user = user;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;

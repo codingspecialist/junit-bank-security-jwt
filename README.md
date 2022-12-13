@@ -8,6 +8,7 @@
 - Jwt Create, Verify 테스트 - 통과
 - JwtAuthentication(로그인) 테스트 - 통과
 - JwtAuthorization(인가) 테스트 - 통과 (ROLE_ 안붙여도 된다 이제!! - 문서에 나옴)
+https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html
 - Account 계좌생성
 - Account 목록보기
 

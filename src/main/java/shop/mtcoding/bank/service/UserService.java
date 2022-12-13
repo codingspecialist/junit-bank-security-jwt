@@ -1,5 +1,7 @@
 package shop.mtcoding.bank.service;
 
+import java.util.Optional;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,9 +33,8 @@ public class UserService {
         userJoinReqDto.setPassword(encPassword);
 
         // 동일 유저 검사
-        boolean isSameUser = userRepository.findByUsername(userJoinReqDto.getUsername()).isPresent();
-
-        if (isSameUser) {
+        Optional<User> userOP = userRepository.findByUsername(userJoinReqDto.getUsername());
+        if (userOP.isPresent()) {
             throw new CustomApiException("동일한 username이 존재합니다");
         }
 
