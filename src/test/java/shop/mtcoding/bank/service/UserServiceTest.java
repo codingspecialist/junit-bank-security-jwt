@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import shop.mtcoding.bank.config.dummy.DummyObject;
 import shop.mtcoding.bank.domain.user.User;
@@ -24,6 +26,8 @@ public class UserServiceTest extends DummyObject {
     private UserService userService;
     @Mock
     private UserRepository userRepository;
+    @Spy
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Test
     public void 회원가입_test() throws Exception {
@@ -35,7 +39,8 @@ public class UserServiceTest extends DummyObject {
         userJoinReqDto.setEmail("ssar@nate.com");
 
         // stub 1
-        when(userRepository.findByUsername("ssar")).thenReturn(Optional.of(null));
+        when(userRepository.findByUsername(userJoinReqDto.getUsername())).thenReturn(Optional.empty());
+
         // stub 2
         User ssar = newMockUser(1L, "ssar", "쌀");
         when(userRepository.save(any())).thenReturn(ssar);
