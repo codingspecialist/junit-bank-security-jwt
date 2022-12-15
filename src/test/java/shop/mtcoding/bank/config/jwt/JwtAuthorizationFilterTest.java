@@ -51,7 +51,7 @@ public class JwtAuthorizationFilterTest {
                 .perform(get("/api/user/hello/test"));
 
         // then
-        resultActions.andExpect(status().isForbidden());
+        resultActions.andExpect(status().isUnauthorized());
     }
 
     // https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html

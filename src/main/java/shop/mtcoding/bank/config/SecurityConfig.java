@@ -52,10 +52,10 @@ public class SecurityConfig {
         http.csrf().disable(); // csrf 허용안함
         http.cors().configurationSource(configurationSource()); // cors 재정의
 
-        // ExcpetionTranslationFilter (인증 권한 확인 필터)
+        // ExcpetionTranslationFilter (인증 확인 필터)
         http.exceptionHandling().authenticationEntryPoint(
                 (request, response, authException) -> {
-                    CustomResponseUtil.forbidden(response, "로그인 해주세요");
+                    CustomResponseUtil.unAuthorized(response, "로그인 해주세요");
                 });
 
         /*
