@@ -20,6 +20,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import shop.mtcoding.bank.domain.user.User;
+import shop.mtcoding.bank.handler.ex.CustomApiException;
 
 @Getter
 @NoArgsConstructor
@@ -31,10 +32,10 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 20)
     private Long number; // 계좌번호
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 4)
     private String password; // 계좌비밀번호
 
     @Column(nullable = false)
@@ -61,5 +62,17 @@ public class Account {
         this.user = user;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
+    }
+
+    public void checkOwner(Long userId) {
+        if (user.getId() != userId) {
+            throw new CustomApiException("계좌 소유자가 아닙니다");
+        }
+    }
+
+    public void checkPassword(String password) {
+        if (!this.password.equals(password)) {
+            throw new CustomApiException("계좌 비밀번호 검증에 실패했습니다");
+        }
     }
 }

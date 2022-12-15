@@ -33,7 +33,10 @@ public class UserApiController {
         return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", userJoinRespDto), HttpStatus.CREATED);
     }
 
-    // admin 권한을 생각해서 주소를 만들자!
+    // LoginUser로 패스워드 변경을 하게 되면, ADMIN은 절대 패스워드 변경을 할 수 없다.
+    // 변경할 파라메터를 받고, 유저,어드민의 권한을 체크하자.
+    // 어드민은 서버를 따로 만드는 것이 좋다. 그래야 이렇게 userId를 매번 받아서 체크하는 로직이 사라진다.
+    // 그래도 공부겸 하나 추가함.
     @PutMapping("/user/{userId}/password")
     public ResponseEntity<?> updatePassword(
             @PathVariable Long userId,

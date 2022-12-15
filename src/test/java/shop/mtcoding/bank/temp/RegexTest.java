@@ -58,7 +58,7 @@ public class RegexTest {
     }
 
     @Test
-    public void username_test() throws Exception {
+    public void user_username_test() throws Exception {
         String username = "ssar";
         // String username = "ssa^";
         boolean result = Pattern.matches("^[a-zA-Z0-9]{2,20}$", username);
@@ -66,7 +66,7 @@ public class RegexTest {
     }
 
     @Test
-    public void email_test() throws Exception {
+    public void user_email_test() throws Exception {
         String email = "s...s@fGf.ccm";
         // String username = "@fGf.ccm"; // +를 *로 변경해보기
         boolean result = Pattern.matches("^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$", email);
@@ -74,10 +74,19 @@ public class RegexTest {
     }
 
     @Test
-    public void fullname_test() throws Exception {
+    public void user_fullname_test() throws Exception {
         String fullname = "코스";
         // String fullname = "코스ss1";
         boolean result = Pattern.matches("^[a-zA-Z가-힣]{1,20}$", fullname);
+        log.debug("테스트 : " + result);
+    }
+
+    @Test
+    public void account_number_and_password_test() throws Exception {
+        String number = "1111";
+        // String value = "111r";
+        // String value = "22한글";
+        boolean result = Pattern.matches("^[0-9]{4,4}$", number);
         log.debug("테스트 : " + result);
     }
 }

@@ -94,13 +94,14 @@ public class UserApiControllerTest extends DummyObject {
 
     // ssar, cos, admin 테스트 해보기
     // 비번 변경해서 테스트 해보기
+    // 유효성 검사 해보기
     @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @Test
     public void updatePassword_test() throws Exception {
         // given
         Long userId = 1L;
         UserPasswordUpdateReqDto userPasswordUpdateReqDto = new UserPasswordUpdateReqDto();
-        userPasswordUpdateReqDto.setCurrentPassword("1234");
+        userPasswordUpdateReqDto.setCurrentPassword("999");
         userPasswordUpdateReqDto.setNewPassword("5678");
 
         String requestBody = om.writeValueAsString(userPasswordUpdateReqDto);
