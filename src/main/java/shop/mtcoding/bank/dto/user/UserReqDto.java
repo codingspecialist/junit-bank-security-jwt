@@ -4,6 +4,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import lombok.Getter;
 import lombok.Setter;
 import shop.mtcoding.bank.domain.user.User;
@@ -29,14 +31,25 @@ public class UserReqDto {
         @Pattern(regexp = "^[a-zA-Z가-힣]{1,20}$", message = "한글/영문 1~20자 이내로 작성해주세요.")
         private String fullname;
 
-        public User toEntity() {
+        public User toEntity(BCryptPasswordEncoder passwordEncoder) {
             return User.builder()
                     .username(username)
-                    .password(password)
+                    .password(passwordEncoder.encode(password))
                     .email(email)
                     .fullname(fullname)
                     .role(UserEnum.CUSTOMER)
                     .build();
         }
+    }
+
+    @Getter
+    @Setter
+    public static class UserPasswordUpdateReqDto {
+        @Size(min = 4, max = 20)
+        @NotEmpty(message = "password는 필수입니다")
+        private String currentPassword;
+        @Size(min = 4, max = 20)
+        @NotEmpty(message = "password는 필수입니다")
+        private String newPassword;
     }
 }

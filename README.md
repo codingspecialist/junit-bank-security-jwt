@@ -9,8 +9,11 @@
 - JwtAuthentication(로그인) 테스트 - 통과
 - JwtAuthorization(인가) 테스트 - 통과 (ROLE_ 안붙여도 된다 이제!! - 문서에 나옴)
 https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html
-- Account 계좌생성
+- Account 계좌등록 (완)
+- User 수정
+- Account 삭제 (ADMIN, CUSTOMER)
 - Account 목록보기
+- 권한체크 (컨트롤러)
 
 
 ## 화면설계
@@ -26,8 +29,10 @@ https://docs.spring.io/spring-security/reference/servlet/authorization/authorize
 
 ## 기능정리
 - 회원가입
+- 회원수정
 - 로그인
 - 계좌등록
+- 계좌삭제
 - 본인계좌목록보기 
 > (User select, Account select)
 - 입금하기

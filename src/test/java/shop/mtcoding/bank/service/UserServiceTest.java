@@ -18,6 +18,7 @@ import shop.mtcoding.bank.config.dummy.DummyObject;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
 import shop.mtcoding.bank.dto.user.UserReqDto.UserJoinReqDto;
+import shop.mtcoding.bank.dto.user.UserReqDto.UserPasswordUpdateReqDto;
 import shop.mtcoding.bank.dto.user.UserRespDto.UserJoinRespDto;
 
 @ExtendWith(MockitoExtension.class)
@@ -51,5 +52,24 @@ public class UserServiceTest extends DummyObject {
         // then
         assertThat(userJoinRespDto.getId()).isEqualTo(1L);
         assertThat(userJoinRespDto.getUsername()).isEqualTo("ssar");
+    }
+
+    // Bcrpt는 salt값을 반영하여 암호화된다.
+    @Test
+    public void 패스워드변경_test() throws Exception {
+        // given
+        UserPasswordUpdateReqDto userPasswordUpdateReqDto = new UserPasswordUpdateReqDto();
+        userPasswordUpdateReqDto.setCurrentPassword("1234");
+        userPasswordUpdateReqDto.setNewPassword("5678");
+
+        // stub
+        User ssar = newMockUser(1L, "ssar", "쌀");
+        when(userRepository.findById(1L)).thenReturn(Optional.of(ssar));
+
+        // when
+        userService.패스워드변경(userPasswordUpdateReqDto, 1L);
+
+        // then
+        // 예외만 안터지면 됨.
     }
 }
