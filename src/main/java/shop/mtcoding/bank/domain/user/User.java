@@ -68,22 +68,22 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public void checkCurrentPasswordIsNotSame(String currentPassword, BCryptPasswordEncoder passwordEncoder) {
+    public void authenticationPassword(String currentPassword, BCryptPasswordEncoder passwordEncoder) {
         if (!passwordEncoder.matches(currentPassword, this.password)) {
             throw new CustomApiException("패스워드 인증에 실패하였습니다");
         }
     }
 
-    public void checkNewPasswordIsSame(String newEncPassword, BCryptPasswordEncoder passwordEncoder) {
-        if (passwordEncoder.matches(newEncPassword, this.password)) {
+    public void checkSamePassword(String newPassword, BCryptPasswordEncoder passwordEncoder) {
+        if (passwordEncoder.matches(newPassword, this.password)) {
             throw new CustomApiException("새로운 패스워드가 현재 패스워드와 동일합니다");
         }
     }
 
     public void updatePassword(String currentPassword, String newPassword,
             BCryptPasswordEncoder passwordEncoder) {
-        checkCurrentPasswordIsNotSame(currentPassword, passwordEncoder);
-        checkNewPasswordIsSame(newPassword, passwordEncoder);
+        authenticationPassword(currentPassword, passwordEncoder);
+        checkSamePassword(newPassword, passwordEncoder);
         this.password = passwordEncoder.encode(newPassword);
     }
 

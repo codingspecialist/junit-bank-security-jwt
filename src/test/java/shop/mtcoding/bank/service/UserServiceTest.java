@@ -1,6 +1,7 @@
 package shop.mtcoding.bank.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -12,6 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import shop.mtcoding.bank.config.dummy.DummyObject;
@@ -23,6 +26,7 @@ import shop.mtcoding.bank.dto.user.UserRespDto.UserJoinRespDto;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest extends DummyObject {
+    private final Logger log = LoggerFactory.getLogger(getClass());
     @InjectMocks
     private UserService userService;
     @Mock
@@ -70,6 +74,6 @@ public class UserServiceTest extends DummyObject {
         userService.패스워드변경(userPasswordUpdateReqDto, 1L);
 
         // then
-        // 예외만 안터지면 됨.
+        assertTrue(passwordEncoder.matches("5678", ssar.getPassword()));
     }
 }
