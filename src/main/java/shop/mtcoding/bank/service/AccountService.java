@@ -30,16 +30,16 @@ public class AccountService {
     // 삭제는 보통 put요청으로 update를 하고, 상태변경을 한다. 계좌 활성화 상태!!
     // put 요청을 해야 body 값을 받을 수 있고 password 검증이 가능해진다. (숙제)
     @Transactional
-    public void 계좌삭제(Long accountId, Long userId) {
+    public void 계좌삭제(Long accountNumber, Long userId) {
         // 1. 계좌 확인
-        Account accountPS = accountRepository.findById(accountId).orElseThrow(
+        Account accountPS = accountRepository.findByNumber(accountNumber).orElseThrow(
                 () -> new CustomApiException("계좌를 찾을 수 없습니다"));
 
         // 2. 계좌 소유자 확인
         accountPS.checkOwner(userId);
 
         // 3. 계좌 삭제
-        accountRepository.deleteById(accountId);
+        accountRepository.deleteById(accountPS.getId());
     }
 
 }

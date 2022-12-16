@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -25,7 +26,9 @@ import shop.mtcoding.bank.handler.ex.CustomApiException;
 @Getter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "account")
+@Table(name = "account", indexes = {
+        @Index(name = "idx_account_number", columnList = "number")
+})
 @Entity
 public class Account {
     @Id

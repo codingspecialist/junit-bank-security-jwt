@@ -17,9 +17,10 @@ import shop.mtcoding.bank.service.AccountService;
 public class AccountApiController {
     private final AccountService accountService;
 
-    @DeleteMapping("/account/{accountId}")
-    public ResponseEntity<?> deleteAccount(@PathVariable Long accountId, @AuthenticationPrincipal LoginUser loginUser) {
-        accountService.계좌삭제(accountId, loginUser.getUser().getId());
+    @DeleteMapping("/account/{accountNumber}")
+    public ResponseEntity<?> deleteAccount(@PathVariable Long accountNumber,
+            @AuthenticationPrincipal LoginUser loginUser) {
+        accountService.계좌삭제(accountNumber, loginUser.getUser().getId());
         return new ResponseEntity<>(new ResponseDto<>(1, "계좌 삭제 완료", null), HttpStatus.OK);
     }
 }
