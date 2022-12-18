@@ -1,6 +1,8 @@
 package shop.mtcoding.bank.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -24,6 +26,7 @@ import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountSaveRespDto;
+import shop.mtcoding.bank.handler.ex.CustomApiException;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountServiceTest extends DummyObject {
@@ -40,6 +43,7 @@ public class AccountServiceTest extends DummyObject {
     @Spy
     private ObjectMapper om;
 
+    // DTO 테스트
     @Test
     public void 계좌등록_test() throws Exception {
         // given
@@ -62,6 +66,45 @@ public class AccountServiceTest extends DummyObject {
 
         // then
         assertThat(accountSaveRespDto.getNumber()).isEqualTo(1111L);
+    }
+
+    // 계좌 소유자 확인 테스트
+    @Test
+    public void 계좌삭제_test1() throws Exception {
+        // given
+        Long accountNumber = 1111L;
+        Long userId = 2L;
+
+        // stub
+        User ssar = newMockUser(1L, "ssar", "쌀");
+        Account ssarAccount = newMockAccount(1L, 1111L, ssar);
+        when(accountRepository.findByNumber(accountNumber)).thenReturn(Optional.of(ssarAccount));
+
+        // when then
+        assertThrows(CustomApiException.class, () -> accountService.계좌삭제(accountNumber, userId));
+    }
+
+    // 계좌 소유자 확인 테스트
+    @Test
+    public void 계좌삭제_test2() throws Exception {
+        // given
+        Long accountNumber = 1111L;
+        Long userId = 2L;
+
+        // stub
+        User ssar = newMockUser(1L, "ssar", "쌀");
+        Account ssarAccount = newMockAccount(1L, 1111L, ssar);
+        when(accountRepository.findByNumber(accountNumber)).thenReturn(Optional.of(ssarAccount));
+
+        // when
+        try {
+            accountService.계좌삭제(accountNumber, userId);
+        } catch (Exception e) {
+            return;
+        }
+
+        // then
+        fail("예외 발생 안함");
     }
 
 }
