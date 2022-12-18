@@ -2,7 +2,6 @@ package shop.mtcoding.bank.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +27,7 @@ import shop.mtcoding.bank.domain.account.AccountRepository;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
+import shop.mtcoding.bank.service.AccountService.AccountDepositReqDto;
 
 @ActiveProfiles("test")
 @Sql("classpath:db/teardown.sql") // teardown
@@ -95,6 +95,28 @@ public class AccountApiControllerTest extends DummyObject {
         // then
         resultActions.andExpect(status().isOk());
 
+    }
+
+    @Test
+    public void depositAccount_test() throws Exception {
+        // given
+        AccountDepositReqDto accountDepositReqDto = new AccountDepositReqDto();
+        accountDepositReqDto.setDepositAccountNumber(1111L);
+        accountDepositReqDto.setAmount(100L);
+        accountDepositReqDto.setGubun("DEPOSIT");
+        accountDepositReqDto.setTel("01022226666");
+
+        String requestBody = om.writeValueAsString(accountDepositReqDto);
+        log.debug("디버그 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(post("/api/deposit").content(requestBody).contentType(APPLICATION_JSON_UTF8));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        log.debug("디버그 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isCreated());
     }
 
 }

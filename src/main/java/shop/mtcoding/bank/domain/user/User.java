@@ -15,7 +15,6 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import lombok.Builder;
@@ -26,7 +25,7 @@ import shop.mtcoding.bank.handler.ex.CustomApiException;
 @Getter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "users")
+@Table(name = "user_tb")
 @Entity
 public class User {
 

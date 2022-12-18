@@ -26,7 +26,7 @@ import shop.mtcoding.bank.handler.ex.CustomApiException;
 @Getter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "account", indexes = {
+@Table(name = "account_tb", indexes = {
         @Index(name = "idx_account_number", columnList = "number")
 })
 @Entity
@@ -73,9 +73,19 @@ public class Account {
         }
     }
 
-    public void checkPassword(String password) {
+    public void checkSamePassword(String password) {
         if (!this.password.equals(password)) {
             throw new CustomApiException("계좌 비밀번호 검증에 실패했습니다");
         }
+    }
+
+    public void checkZeroAmount(Long amount) {
+        if (amount <= 0L) {
+            throw new CustomApiException("0원 이하의 금액을 입금할 수 없습니다");
+        }
+    }
+
+    public void deposit(Long amount) {
+        balance = balance + amount;
     }
 }
