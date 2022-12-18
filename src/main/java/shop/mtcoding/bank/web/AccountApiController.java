@@ -27,7 +27,7 @@ public class AccountApiController {
     private final AccountService accountService;
 
     @PostMapping("/account")
-    public ResponseEntity<?> save(@RequestBody @Valid AccountSaveReqDto accountSaveReqDto,
+    public ResponseEntity<?> saveAccount(@RequestBody @Valid AccountSaveReqDto accountSaveReqDto,
             BindingResult bindingResult,
             @AuthenticationPrincipal LoginUser loginUser) {
         AccountSaveRespDto accountSaveRespDto = accountService.계좌등록(accountSaveReqDto, loginUser.getUser().getId());

@@ -82,11 +82,10 @@ public class RegexTest {
     }
 
     @Test
-    public void account_number_and_password_test() throws Exception {
-        String number = "1111";
-        // String value = "111r";
-        // String value = "22한글";
-        boolean result = Pattern.matches("^[0-9]{4,4}$", number);
+    public void account_password_test() throws Exception {
+        String password = "1234";
+
+        boolean result = Pattern.matches("^[0-9]{4,4}$", password);
         log.debug("테스트 : " + result);
     }
 }

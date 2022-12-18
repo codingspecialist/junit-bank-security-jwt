@@ -105,12 +105,13 @@ create table transaction (
 ## 개발 더미 데이터 (통합 or 레포)
 ```java
 public void dataSetting() {
-    User ssarUser = userRepository.save(newUser("ssar"));
-    User cosUser = userRepository.save(newUser("cos"));
-    User love = userRepository.save(newUser("love"));
-    Account ssarAccount = accountRepository.save(newAccount(1111L, "쌀", ssarUser));
-    Account cosAccount = accountRepository.save(newAccount(2222L, "코스", cosUser));
-    Account loveAccount = accountRepository.save(newAccount(3333L, "러브", love));
+    User ssar = userRepository.save(newUser("ssar", "쌀"));
+    User cos = userRepository.save(newUser("cos", "코스,"));
+    User love = userRepository.save(newUser("love", "러브"));
+    User admin = userRepository.save(newUser("admin", "관리자"));
+    Account ssarAccount = accountRepository.save(newAccount(1111L, ssar));
+    Account cosAccount = accountRepository.save(newAccount(2222L, cos));
+    Account loveAccount = accountRepository.save(newAccount(3333L, love));
     Transaction withdrawTransaction1 = transactionRepository
                     .save(newWithdrawTransaction(100L, ssarAccount));
     Transaction depositTransaction1 = transactionRepository
