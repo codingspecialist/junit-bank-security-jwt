@@ -10,15 +10,16 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import shop.mtcoding.bank.config.auth.LoginUser;
 import shop.mtcoding.bank.dto.ResponseDto;
 import shop.mtcoding.bank.dto.user.UserReqDto.UserPasswordUpdateReqDto;
 import shop.mtcoding.bank.service.AccountService;
 import shop.mtcoding.bank.service.UserService;
 
+@RequestMapping("/api")
 @RequiredArgsConstructor
 @RestController
 public class AdminApiController {

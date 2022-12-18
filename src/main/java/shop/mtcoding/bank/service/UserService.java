@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
-import shop.mtcoding.bank.dto.user.UserReqDto.UserJoinReqDto;
+import shop.mtcoding.bank.dto.user.UserReqDto.JoinReqDto;
 import shop.mtcoding.bank.dto.user.UserReqDto.UserPasswordUpdateReqDto;
-import shop.mtcoding.bank.dto.user.UserRespDto.UserJoinRespDto;
+import shop.mtcoding.bank.dto.user.UserRespDto.JoinRespDto;
 import shop.mtcoding.bank.handler.ex.CustomApiException;
 
 /*
@@ -30,18 +30,18 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
-    public UserJoinRespDto 회원가입(UserJoinReqDto userJoinReqDto) {
+    public JoinRespDto 회원가입(JoinReqDto joinReqDto) {
         // 1. 동일 유저네임 존재 검사
-        Optional<User> userOP = userRepository.findByUsername(userJoinReqDto.getUsername());
+        Optional<User> userOP = userRepository.findByUsername(joinReqDto.getUsername());
         if (userOP.isPresent()) {
             throw new CustomApiException("동일한 username이 존재합니다");
         }
 
         // 2. 패스워드 인코딩 + DB 저장
-        User userPS = userRepository.save(userJoinReqDto.toEntity(passwordEncoder));
+        User userPS = userRepository.save(joinReqDto.toEntity(passwordEncoder));
 
         // dto response
-        return new UserJoinRespDto(userPS);
+        return new JoinRespDto(userPS);
     }
 
     @Transactional

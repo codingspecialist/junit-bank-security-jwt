@@ -19,8 +19,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import shop.mtcoding.bank.config.auth.LoginUser;
-import shop.mtcoding.bank.dto.auth.AuthReqDto.LoginReqDto;
-import shop.mtcoding.bank.dto.auth.AuthRespDto.LoginRespDto;
+import shop.mtcoding.bank.dto.user.UserReqDto.LoginReqDto;
+import shop.mtcoding.bank.dto.user.UserRespDto.LoginRespDto;
 import shop.mtcoding.bank.util.CustomResponseUtil;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -30,6 +30,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
+        setFilterProcessesUrl("/api/login");
         this.authenticationManager = authenticationManager;
     }
 

@@ -20,9 +20,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import shop.mtcoding.bank.config.dummy.DummyObject;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
-import shop.mtcoding.bank.dto.user.UserReqDto.UserJoinReqDto;
+import shop.mtcoding.bank.dto.user.UserReqDto.JoinReqDto;
 import shop.mtcoding.bank.dto.user.UserReqDto.UserPasswordUpdateReqDto;
-import shop.mtcoding.bank.dto.user.UserRespDto.UserJoinRespDto;
+import shop.mtcoding.bank.dto.user.UserRespDto.JoinRespDto;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest extends DummyObject {
@@ -37,25 +37,25 @@ public class UserServiceTest extends DummyObject {
     @Test
     public void 회원가입_test() throws Exception {
         // given
-        UserJoinReqDto userJoinReqDto = new UserJoinReqDto();
-        userJoinReqDto.setUsername("ssar");
-        userJoinReqDto.setFullname("쌀");
-        userJoinReqDto.setPassword("1234");
-        userJoinReqDto.setEmail("ssar@nate.com");
+        JoinReqDto joinReqDto = new JoinReqDto();
+        joinReqDto.setUsername("ssar");
+        joinReqDto.setFullname("쌀");
+        joinReqDto.setPassword("1234");
+        joinReqDto.setEmail("ssar@nate.com");
 
         // stub 1
-        when(userRepository.findByUsername(userJoinReqDto.getUsername())).thenReturn(Optional.empty());
+        when(userRepository.findByUsername(joinReqDto.getUsername())).thenReturn(Optional.empty());
 
         // stub 2
         User ssar = newMockUser(1L, "ssar", "쌀");
         when(userRepository.save(any())).thenReturn(ssar);
 
         // when
-        UserJoinRespDto userJoinRespDto = userService.회원가입(userJoinReqDto);
+        JoinRespDto joinRespDto = userService.회원가입(joinReqDto);
 
         // then
-        assertThat(userJoinRespDto.getId()).isEqualTo(1L);
-        assertThat(userJoinRespDto.getUsername()).isEqualTo("ssar");
+        assertThat(joinRespDto.getId()).isEqualTo(1L);
+        assertThat(joinRespDto.getUsername()).isEqualTo("ssar");
     }
 
     // Bcrpt는 salt값을 반영하여 암호화된다.

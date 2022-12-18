@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import shop.mtcoding.bank.config.dummy.DummyObject;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
-import shop.mtcoding.bank.dto.auth.AuthReqDto.LoginReqDto;
+import shop.mtcoding.bank.dto.user.UserReqDto.LoginReqDto;
 
 @ActiveProfiles("test")
 @Sql("classpath:db/teardown.sql") // teardown
@@ -57,7 +57,7 @@ public class JwtAuthenticationFilterTest extends DummyObject {
 
         // when
         ResultActions resultActions = mvc
-                .perform(post("/login").content(requestBody).contentType(APPLICATION_JSON_UTF8));
+                .perform(post("/api/login").content(requestBody).contentType(APPLICATION_JSON_UTF8));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         String token = resultActions.andReturn().getResponse().getHeader("Authorization");
         log.debug("테스트 : " + token);

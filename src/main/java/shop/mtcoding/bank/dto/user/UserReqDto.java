@@ -12,9 +12,16 @@ import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserEnum;
 
 public class UserReqDto {
+    @Getter
+    @Setter
+    public static class LoginReqDto {
+        private String username;
+        private String password;
+    }
+
     @Setter
     @Getter
-    public static class UserJoinReqDto {
+    public static class JoinReqDto {
 
         // 영문,숫자만 되고, 길이는 최소2~20이다.
         @Pattern(regexp = "^[a-zA-Z0-9]{2,20}$", message = "영문/숫자 2~20자 이내로 작성해주세요.")

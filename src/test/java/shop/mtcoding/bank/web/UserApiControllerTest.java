@@ -2,7 +2,6 @@ package shop.mtcoding.bank.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import shop.mtcoding.bank.config.dummy.DummyObject;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
-import shop.mtcoding.bank.dto.user.UserReqDto.UserJoinReqDto;
+import shop.mtcoding.bank.dto.user.UserReqDto.JoinReqDto;
 import shop.mtcoding.bank.dto.user.UserReqDto.UserPasswordUpdateReqDto;
 
 @ActiveProfiles("test")
@@ -53,18 +52,18 @@ public class UserApiControllerTest extends DummyObject {
     @Test
     public void join_success_test() throws Exception {
         // given
-        UserJoinReqDto userJoinReqDto = new UserJoinReqDto();
-        userJoinReqDto.setUsername("love");
-        userJoinReqDto.setPassword("1234");
-        userJoinReqDto.setEmail("love@nate.com");
-        userJoinReqDto.setFullname("러브");
+        JoinReqDto joinReqDto = new JoinReqDto();
+        joinReqDto.setUsername("love");
+        joinReqDto.setPassword("1234");
+        joinReqDto.setEmail("love@nate.com");
+        joinReqDto.setFullname("러브");
 
-        String requestBody = om.writeValueAsString(userJoinReqDto);
+        String requestBody = om.writeValueAsString(joinReqDto);
         log.debug("테스트 : " + requestBody);
 
         // when
         ResultActions resultActions = mvc
-                .perform(post("/join").content(requestBody).contentType(APPLICATION_JSON_UTF8));
+                .perform(post("/api/join").content(requestBody).contentType(APPLICATION_JSON_UTF8));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         log.debug("테스트 : " + responseBody);
         // then
@@ -74,18 +73,18 @@ public class UserApiControllerTest extends DummyObject {
     @Test
     public void join_fail_test() throws Exception {
         // given
-        UserJoinReqDto userJoinReqDto = new UserJoinReqDto();
-        userJoinReqDto.setUsername("ssar");
-        userJoinReqDto.setPassword("1234");
-        userJoinReqDto.setEmail("ssar@nate.com");
-        userJoinReqDto.setFullname("쌀");
+        JoinReqDto joinReqDto = new JoinReqDto();
+        joinReqDto.setUsername("ssar");
+        joinReqDto.setPassword("1234");
+        joinReqDto.setEmail("ssar@nate.com");
+        joinReqDto.setFullname("쌀");
 
-        String requestBody = om.writeValueAsString(userJoinReqDto);
+        String requestBody = om.writeValueAsString(joinReqDto);
         log.debug("테스트 : " + requestBody);
 
         // when
         ResultActions resultActions = mvc
-                .perform(post("/join").content(requestBody).contentType(APPLICATION_JSON_UTF8));
+                .perform(post("/api/join").content(requestBody).contentType(APPLICATION_JSON_UTF8));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         log.debug("테스트 : " + responseBody);
         // then
@@ -99,9 +98,8 @@ public class UserApiControllerTest extends DummyObject {
     @Test
     public void updatePassword_test() throws Exception {
         // given
-        Long userId = 1L;
         UserPasswordUpdateReqDto userPasswordUpdateReqDto = new UserPasswordUpdateReqDto();
-        userPasswordUpdateReqDto.setCurrentPassword("999");
+        userPasswordUpdateReqDto.setCurrentPassword("1234");
         userPasswordUpdateReqDto.setNewPassword("5678");
 
         String requestBody = om.writeValueAsString(userPasswordUpdateReqDto);
@@ -109,7 +107,8 @@ public class UserApiControllerTest extends DummyObject {
 
         // when
         ResultActions resultActions = mvc
-                .perform(put("/user/" + userId + "/password").content(requestBody).contentType(APPLICATION_JSON_UTF8));
+                .perform(put("/api/user/login-user/password").content(requestBody)
+                        .contentType(APPLICATION_JSON_UTF8));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         log.debug("테스트 : " + responseBody);
 
