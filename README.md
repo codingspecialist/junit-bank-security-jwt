@@ -1,12 +1,22 @@
 # 입출금이체 프로그램
 
 - UserRepository findByUsername() 테스트 - 통과
-- UserService 회원가입 테스트
-- UserApiController 회원가입 테스트
-- CustomValidationAdvice 생성 및 CustomValidationException 및 ReqDto 유효성 검사
-- CustomApiExceptionAdvice 생성 및 CustomApiException
-- JwtAuthentication 테스트
-- JwtAuthorization 테스트
+- UserService 회원가입 테스트 - 통과
+- UserApiController 회원가입 테스트 - 통과
+- CustomValidationAdvice 생성 및 CustomValidationException 및 ReqDto 유효성 검사 - 통과
+- CustomApiExceptionAdvice 생성 및 CustomApiException - 통과 (회원가입 유저네임 중복 테스트)
+- Jwt Create, Verify 테스트 - 통과
+- JwtAuthentication(로그인) 테스트 - 통과
+- JwtAuthorization(인가) 테스트 - 통과 (ROLE_ 안붙여도 된다 이제!! - 문서에 나옴)
+https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html
+- Account 계좌등록 (완)
+- User 패스워드 수정 (완)
+- Account 삭제 (ADMIN, CUSTOMER) 
+- CustomForbiddenException 생성 (완)
+- Account 목록보기
+- 권한체크 (컨트롤러)
+- 관리자 컨트롤러 생성
+
 
 ## 화면설계
 [ux-design](ux-design.pdf)
@@ -21,8 +31,10 @@
 
 ## 기능정리
 - 회원가입
+- 회원패스워드변경
 - 로그인
 - 계좌등록
+- 계좌삭제
 - 본인계좌목록보기 
 > (User select, Account select)
 - 입금하기
@@ -93,12 +105,13 @@ create table transaction (
 ## 개발 더미 데이터 (통합 or 레포)
 ```java
 public void dataSetting() {
-    User ssarUser = userRepository.save(newUser("ssar"));
-    User cosUser = userRepository.save(newUser("cos"));
-    User love = userRepository.save(newUser("love"));
-    Account ssarAccount = accountRepository.save(newAccount(1111L, "쌀", ssarUser));
-    Account cosAccount = accountRepository.save(newAccount(2222L, "코스", cosUser));
-    Account loveAccount = accountRepository.save(newAccount(3333L, "러브", love));
+    User ssar = userRepository.save(newUser("ssar", "쌀"));
+    User cos = userRepository.save(newUser("cos", "코스,"));
+    User love = userRepository.save(newUser("love", "러브"));
+    User admin = userRepository.save(newUser("admin", "관리자"));
+    Account ssarAccount = accountRepository.save(newAccount(1111L, ssar));
+    Account cosAccount = accountRepository.save(newAccount(2222L, cos));
+    Account loveAccount = accountRepository.save(newAccount(3333L, love));
     Transaction withdrawTransaction1 = transactionRepository
                     .save(newWithdrawTransaction(100L, ssarAccount));
     Transaction depositTransaction1 = transactionRepository

@@ -15,15 +15,17 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import shop.mtcoding.bank.handler.ex.CustomApiException;
 
 @Getter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "users")
+@Table(name = "user_tb")
 @Entity
 public class User {
 
@@ -65,59 +67,23 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        return prime;
+    public void authenticationPassword(String currentPassword, BCryptPasswordEncoder passwordEncoder) {
+        if (!passwordEncoder.matches(currentPassword, this.password)) {
+            throw new CustomApiException("패스워드 인증에 실패하였습니다");
+        }
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        User other = (User) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        if (username == null) {
-            if (other.username != null)
-                return false;
-        } else if (!username.equals(other.username))
-            return false;
-        if (password == null) {
-            if (other.password != null)
-                return false;
-        } else if (!password.equals(other.password))
-            return false;
-        if (email == null) {
-            if (other.email != null)
-                return false;
-        } else if (!email.equals(other.email))
-            return false;
-        if (fullname == null) {
-            if (other.fullname != null)
-                return false;
-        } else if (!fullname.equals(other.fullname))
-            return false;
-        if (role != other.role)
-            return false;
-        if (updatedAt == null) {
-            if (other.updatedAt != null)
-                return false;
-        } else if (!updatedAt.equals(other.updatedAt))
-            return false;
-        if (createdAt == null) {
-            if (other.createdAt != null)
-                return false;
-        } else if (!createdAt.equals(other.createdAt))
-            return false;
-        return true;
+    public void checkSamePassword(String newPassword, BCryptPasswordEncoder passwordEncoder) {
+        if (passwordEncoder.matches(newPassword, this.password)) {
+            throw new CustomApiException("새로운 패스워드가 현재 패스워드와 동일합니다");
+        }
+    }
+
+    public void updatePassword(String currentPassword, String newPassword,
+            BCryptPasswordEncoder passwordEncoder) {
+        authenticationPassword(currentPassword, passwordEncoder);
+        checkSamePassword(newPassword, passwordEncoder);
+        this.password = passwordEncoder.encode(newPassword);
     }
 
 }

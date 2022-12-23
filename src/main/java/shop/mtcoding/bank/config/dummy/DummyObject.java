@@ -1,7 +1,10 @@
 package shop.mtcoding.bank.config.dummy;
 
+import java.time.LocalDateTime;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import shop.mtcoding.bank.domain.account.Account;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserEnum;
 
@@ -31,5 +34,28 @@ public class DummyObject {
                 .role(username.equals("admin") ? UserEnum.ADMIN : UserEnum.CUSTOMER)
                 .build();
         return user;
+    }
+
+    protected Account newAccount(Long number, User user) {
+        Account account = Account.builder()
+                .number(number)
+                .password("1234")
+                .balance(1000L)
+                .user(user)
+                .build();
+        return account;
+    }
+
+    protected Account newMockAccount(Long id, Long number, User user) {
+        Account account = Account.builder()
+                .id(id)
+                .number(number)
+                .password("1234")
+                .balance(1000L)
+                .user(user)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+        return account;
     }
 }

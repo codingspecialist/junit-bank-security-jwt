@@ -20,7 +20,7 @@ public class LoginUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(() -> "ROLE_" + user.getRole());
+        authorities.add(() -> "ROLE_" + user.getRole()); // 여기는 ROLE_ 붙여야 됨
         return authorities;
     }
 

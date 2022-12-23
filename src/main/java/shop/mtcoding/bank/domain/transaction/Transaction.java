@@ -29,7 +29,7 @@ import shop.mtcoding.bank.domain.account.Account;
 @Getter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "transaction")
+@Table(name = "transaction_tb")
 @Entity
 public class Transaction {
     @Id
@@ -54,6 +54,10 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private TransactionEnum gubun; // 입금(ATM으로 부터), 출금(ATM으로), 이체(다른계좌로)
 
+    private String sender; // 계좌가 사라져도 로그는 남아야 한다.
+    private String reciver; // 계좌가 사라져도 로그는 남아야 한다.
+    private String tel; // 무통장 입금시 전화번호 필요함 (입금이 잘못될 경우 연락처가 필요하다)
+
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDateTime updatedAt;
@@ -64,8 +68,8 @@ public class Transaction {
 
     @Builder
     public Transaction(Long id, Account withdrawAccount, Account depositAccount, Long amount,
-            Long withdrawAccountBalance, Long depositAccountBalance, TransactionEnum gubun, LocalDateTime updatedAt,
-            LocalDateTime createdAt) {
+            Long withdrawAccountBalance, Long depositAccountBalance, TransactionEnum gubun, String sender,
+            String reciver, String tel, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
         this.withdrawAccount = withdrawAccount;
         this.depositAccount = depositAccount;
@@ -73,7 +77,11 @@ public class Transaction {
         this.withdrawAccountBalance = withdrawAccountBalance;
         this.depositAccountBalance = depositAccountBalance;
         this.gubun = gubun;
+        this.sender = sender;
+        this.reciver = reciver;
+        this.tel = tel;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
     }
+
 }

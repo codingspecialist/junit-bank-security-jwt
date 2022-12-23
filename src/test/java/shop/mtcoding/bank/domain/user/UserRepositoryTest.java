@@ -49,7 +49,7 @@ public class UserRepositoryTest extends DummyObject {
 
     private void autoincrementReset() {
         this.em
-                .createNativeQuery("ALTER TABLE users ALTER COLUMN `id` RESTART WITH 1")
+                .createNativeQuery("ALTER TABLE user_tb ALTER COLUMN `id` RESTART WITH 1")
                 .executeUpdate();
     }
 

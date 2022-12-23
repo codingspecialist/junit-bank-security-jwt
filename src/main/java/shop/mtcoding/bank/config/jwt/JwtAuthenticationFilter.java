@@ -19,10 +19,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import shop.mtcoding.bank.config.auth.LoginUser;
-import shop.mtcoding.bank.dto.auth.AuthReqDto.LoginReqDto;
-import shop.mtcoding.bank.dto.auth.AuthRespDto.LoginRespDto;
+import shop.mtcoding.bank.dto.user.UserReqDto.LoginReqDto;
+import shop.mtcoding.bank.dto.user.UserRespDto.LoginRespDto;
 import shop.mtcoding.bank.util.CustomResponseUtil;
 
+// Controller 레이어로 끌어와보기 (숙제)
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -30,6 +31,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
+        setFilterProcessesUrl("/api/login");
         this.authenticationManager = authenticationManager;
     }
 
@@ -81,6 +83,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException failed) throws IOException, ServletException {
         log.debug("디버그 : JwtAuthenticationFilter unsuccessfulAuthentication()");
-        CustomResponseUtil.fail(response, "로그인 실패");
+        CustomResponseUtil.badRequest(response, "로그인 실패");
     }
 }

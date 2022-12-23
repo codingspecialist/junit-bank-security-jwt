@@ -4,15 +4,24 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import lombok.Getter;
 import lombok.Setter;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserEnum;
 
 public class UserReqDto {
+    @Getter
+    @Setter
+    public static class LoginReqDto {
+        private String username;
+        private String password;
+    }
+
     @Setter
     @Getter
-    public static class UserJoinReqDto {
+    public static class JoinReqDto {
 
         // 영문,숫자만 되고, 길이는 최소2~20이다.
         @Pattern(regexp = "^[a-zA-Z0-9]{2,20}$", message = "영문/숫자 2~20자 이내로 작성해주세요.")
@@ -29,14 +38,25 @@ public class UserReqDto {
         @Pattern(regexp = "^[a-zA-Z가-힣]{1,20}$", message = "한글/영문 1~20자 이내로 작성해주세요.")
         private String fullname;
 
-        public User toEntity() {
+        public User toEntity(BCryptPasswordEncoder passwordEncoder) {
             return User.builder()
                     .username(username)
-                    .password(password)
+                    .password(passwordEncoder.encode(password))
                     .email(email)
                     .fullname(fullname)
                     .role(UserEnum.CUSTOMER)
                     .build();
         }
+    }
+
+    @Getter
+    @Setter
+    public static class UserPasswordUpdateReqDto {
+        @Size(min = 4, max = 20)
+        @NotEmpty(message = "password는 필수입니다")
+        private String currentPassword;
+        @Size(min = 4, max = 20)
+        @NotEmpty(message = "password는 필수입니다")
+        private String newPassword;
     }
 }

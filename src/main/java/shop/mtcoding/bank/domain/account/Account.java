@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -20,28 +21,28 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import shop.mtcoding.bank.domain.user.User;
+import shop.mtcoding.bank.handler.ex.CustomApiException;
 
 @Getter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "account")
+@Table(name = "account_tb", indexes = {
+        @Index(name = "idx_account_number", columnList = "number")
+})
 @Entity
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 20)
     private Long number; // 계좌번호
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 4)
     private String password; // 계좌비밀번호
 
     @Column(nullable = false)
     private Long balance; // 잔액 (디폴트 값 1000원)
-
-    @Column(nullable = false)
-    private Boolean isActive; // 계좌 활성화 여부
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -55,15 +56,36 @@ public class Account {
     private LocalDateTime createdAt;
 
     @Builder
-    public Account(Long id, Long number, String password, Long balance, Boolean isActive, User user,
+    public Account(Long id, Long number, String password, Long balance, User user,
             LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
         this.number = number;
         this.password = password;
         this.balance = balance;
-        this.isActive = isActive;
         this.user = user;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
+    }
+
+    public void checkOwner(Long userId) {
+        if (user.getId() != userId) {
+            throw new CustomApiException("계좌 소유자가 아닙니다");
+        }
+    }
+
+    public void checkSamePassword(String password) {
+        if (!this.password.equals(password)) {
+            throw new CustomApiException("계좌 비밀번호 검증에 실패했습니다");
+        }
+    }
+
+    public void checkZeroAmount(Long amount) {
+        if (amount <= 0L) {
+            throw new CustomApiException("0원 이하의 금액을 입금할 수 없습니다");
+        }
+    }
+
+    public void deposit(Long amount) {
+        balance = balance + amount;
     }
 }

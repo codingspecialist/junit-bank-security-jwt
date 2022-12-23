@@ -52,10 +52,10 @@ public class SecurityConfig {
         http.csrf().disable(); // csrf 허용안함
         http.cors().configurationSource(configurationSource()); // cors 재정의
 
-        // ExcpetionTranslationFilter (인증 권한 확인 필터)
+        // ExcpetionTranslationFilter (인증 확인 필터)
         http.exceptionHandling().authenticationEntryPoint(
                 (request, response, authException) -> {
-                    CustomResponseUtil.forbidden(response, "로그인 해주세요");
+                    CustomResponseUtil.unAuthorized(response, "로그인 해주세요");
                 });
 
         /*
@@ -77,7 +77,7 @@ public class SecurityConfig {
                 .antMatchers("/api/transaction/**").authenticated()
                 .antMatchers("/api/user/**").authenticated()
                 .antMatchers("/api/account/**").authenticated()
-                .antMatchers("/api/admin/**").hasRole("ROLE_" + UserEnum.ADMIN)
+                .antMatchers("/api/admin/**").hasRole("" + UserEnum.ADMIN) // ROLE_ 안붙여도 됨
                 .anyRequest().permitAll();
         return http.build();
     }
