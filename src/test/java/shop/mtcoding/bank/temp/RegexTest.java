@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// https://regex101.com
 public class RegexTest {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -88,4 +89,20 @@ public class RegexTest {
         boolean result = Pattern.matches("^[0-9]{4,4}$", password);
         log.debug("테스트 : " + result);
     }
+
+    @Test
+    public void account_gubun_test() throws Exception {
+        String gubun = "TRANSFER"; // WITHDRAW(8), DEPOSIT(7), TRANSFER(8)
+
+        boolean result = Pattern.matches("^(WITHDRAW|DEPOSIT|TRANSFER)$", gubun);
+        log.debug("테스트 : " + result);
+    }
+
+    // @Test
+    // public void account_tel_test() throws Exception {
+    // String tel = "1234";
+
+    // boolean result = Pattern.matches("^[0-9]{4,4}$", password);
+    // log.debug("테스트 : " + result);
+    // }
 }

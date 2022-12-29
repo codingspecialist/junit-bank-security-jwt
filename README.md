@@ -15,7 +15,6 @@ https://docs.spring.io/spring-security/reference/servlet/authorization/authorize
 - CustomForbiddenException 생성 (완)
 - Account 목록보기
 - 권한체크 (컨트롤러)
-- 관리자 컨트롤러 생성
 
 
 ## 화면설계

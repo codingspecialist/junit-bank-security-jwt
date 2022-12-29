@@ -26,8 +26,8 @@ import shop.mtcoding.bank.domain.account.Account;
 import shop.mtcoding.bank.domain.account.AccountRepository;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
+import shop.mtcoding.bank.dto.account.AccountReqDto.AccountDepositReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
-import shop.mtcoding.bank.service.AccountService.AccountDepositReqDto;
 
 @ActiveProfiles("test")
 @Sql("classpath:db/teardown.sql") // teardown

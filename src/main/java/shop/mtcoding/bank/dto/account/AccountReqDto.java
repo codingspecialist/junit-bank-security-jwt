@@ -26,4 +26,14 @@ public class AccountReqDto {
                     .build();
         }
     }
+
+    @Getter
+    @Setter
+    public static class AccountDepositReqDto {
+        @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
+        private Long depositAccountNumber;
+        private Long amount;
+        private String gubun;
+        private String tel;
+    }
 }
