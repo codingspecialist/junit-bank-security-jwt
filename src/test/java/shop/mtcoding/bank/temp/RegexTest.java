@@ -98,11 +98,11 @@ public class RegexTest {
         log.debug("테스트 : " + result);
     }
 
-    // @Test
-    // public void account_tel_test() throws Exception {
-    // String tel = "1234";
+    @Test
+    public void account_tel_test() throws Exception {
+        String tel = "010-2222-7777";
 
-    // boolean result = Pattern.matches("^[0-9]{4,4}$", password);
-    // log.debug("테스트 : " + result);
-    // }
+        boolean result = Pattern.matches("^[0-9]{3}-[0-9]{4}-[0-9]{4}$", tel);
+        log.debug("테스트 : " + result);
+    }
 }
