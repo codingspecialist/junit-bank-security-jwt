@@ -21,18 +21,17 @@ public class AccountRespDto {
         }
     }
 
+    // 입금은 인증이 안되어 있어서 잔액을 확인할 수 없다
     @Setter
     @Getter
     public static class AccountDepositRespDto {
         private Long id; // 계좌 ID
         private Long number; // 계좌번호
-        private Long balance; // 잔액
         private TransactionDto transaction; // 거래내역
 
         public AccountDepositRespDto(Account account, Transaction transaction) {
             this.id = account.getId();
             this.number = account.getNumber();
-            this.balance = account.getBalance();
             this.transaction = new TransactionDto(transaction);
         }
 
@@ -54,6 +53,42 @@ public class AccountRespDto {
                 this.sender = transaction.getSender();
                 this.reciver = transaction.getReciver();
                 this.tel = transaction.getTel();
+                this.createdAt = CustomDateUtil.toStringFormat(transaction.getCreatedAt());
+            }
+        }
+    }
+
+    @Setter
+    @Getter
+    public static class AccountWithdrawRespDto {
+        private Long id; // 계좌 ID
+        private Long number; // 계좌번호
+        private Long balance; // 잔액
+        private TransactionDto transaction; // 거래내역
+
+        public AccountWithdrawRespDto(Account account, Transaction transaction) {
+            this.id = account.getId();
+            this.number = account.getNumber();
+            this.balance = account.getBalance();
+            this.transaction = new TransactionDto(transaction);
+        }
+
+        @Getter
+        @Setter
+        public class TransactionDto {
+            private Long id;
+            private Long amount;
+            private String gubun; // 출금
+            private String sender; // 출금 계좌번호
+            private String reciver; // ATM
+            private String createdAt;
+
+            public TransactionDto(Transaction transaction) {
+                this.id = transaction.getId();
+                this.amount = transaction.getAmount();
+                this.gubun = transaction.getGubun().getValue();
+                this.sender = transaction.getSender();
+                this.reciver = transaction.getReciver();
                 this.createdAt = CustomDateUtil.toStringFormat(transaction.getCreatedAt());
             }
         }

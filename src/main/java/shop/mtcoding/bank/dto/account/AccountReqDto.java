@@ -14,12 +14,12 @@ public class AccountReqDto {
     public static class AccountSaveReqDto {
         @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
         private Long number;
-        @Pattern(regexp = "^[0-9]{4,4}$", message = "숫자 4자리로 작성해주세요")
-        private String password;
+        @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
+        private Long password;
 
         public Account toEntity(User user) {
             return Account.builder()
-                    .number(number.longValue())
+                    .number(number)
                     .password(password)
                     .balance(1000L)
                     .user(user)
@@ -31,9 +31,23 @@ public class AccountReqDto {
     @Setter
     public static class AccountDepositReqDto {
         @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
-        private Long depositAccountNumber;
+        private Long number;
         private Long amount;
+        @Pattern(regexp = "^(WITHDRAW|DEPOSIT|TRANSFER)$", message = "구분값을 정확히 입력해주세요")
         private String gubun;
+        @Pattern(regexp = "^[0-9]{3}-[0-9]{4}-[0-9]{4}$", message = "전화번호 양식에 맞게 입력해주세요")
         private String tel;
+    }
+
+    @Getter
+    @Setter
+    public static class AccountWithdrawReqDto {
+        @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
+        private Long number;
+        @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
+        private Long password;
+        private Long amount;
+        @Pattern(regexp = "^(WITHDRAW|DEPOSIT|TRANSFER)$", message = "구분값을 정확히 입력해주세요")
+        private String gubun;
     }
 }

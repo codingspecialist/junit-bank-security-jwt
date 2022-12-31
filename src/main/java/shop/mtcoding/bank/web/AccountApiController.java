@@ -18,8 +18,10 @@ import shop.mtcoding.bank.config.auth.LoginUser;
 import shop.mtcoding.bank.dto.ResponseDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountDepositReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
+import shop.mtcoding.bank.dto.account.AccountReqDto.AccountWithdrawReqDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDepositRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountSaveRespDto;
+import shop.mtcoding.bank.dto.account.AccountRespDto.AccountWithdrawRespDto;
 import shop.mtcoding.bank.service.AccountService;
 
 @RequestMapping("/api")
@@ -28,7 +30,7 @@ import shop.mtcoding.bank.service.AccountService;
 public class AccountApiController {
     private final AccountService accountService;
 
-    @PostMapping("/account")
+    @PostMapping("/s/account")
     public ResponseEntity<?> saveAccount(@RequestBody @Valid AccountSaveReqDto accountSaveReqDto,
             BindingResult bindingResult,
             @AuthenticationPrincipal LoginUser loginUser) {
@@ -37,7 +39,7 @@ public class AccountApiController {
                 HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/account/{accountNumber}")
+    @DeleteMapping("/s/account/{accountNumber}")
     public ResponseEntity<?> deleteAccount(@PathVariable Long accountNumber,
             @AuthenticationPrincipal LoginUser loginUser) {
         accountService.계좌삭제(accountNumber, loginUser.getUser().getId());
@@ -45,7 +47,7 @@ public class AccountApiController {
     }
 
     // ATM 입금
-    @PostMapping("/deposit")
+    @PostMapping("/account/deposit")
     public ResponseEntity<?> depositAccount(@RequestBody @Valid AccountDepositReqDto accountDepositReqDto,
             BindingResult bindingResult) {
         AccountDepositRespDto accountDepositRespDto = accountService.계좌입금(accountDepositReqDto);
@@ -53,10 +55,12 @@ public class AccountApiController {
     }
 
     // ATM 출금
-    @PostMapping("/withdraw")
-    public ResponseEntity<?> withdrawAccount(@RequestBody @Valid AccountDepositReqDto accountDepositReqDto,
+    @PostMapping("/s/account/withdraw")
+    public ResponseEntity<?> withdrawAccount(@AuthenticationPrincipal LoginUser loginUser,
+            @RequestBody @Valid AccountWithdrawReqDto accountWithdrawReqDto,
             BindingResult bindingResult) {
-        AccountDepositRespDto accountDepositRespDto = accountService.계좌입금(accountDepositReqDto);
-        return new ResponseEntity<>(new ResponseDto<>(1, "계좌 입금 완료", accountDepositRespDto), HttpStatus.CREATED);
+        AccountWithdrawRespDto accountWithdrawRespDto = accountService.계좌출금(accountWithdrawReqDto,
+                loginUser.getUser().getId());
+        return new ResponseEntity<>(new ResponseDto<>(1, "계좌 출금 완료", accountWithdrawRespDto), HttpStatus.CREATED);
     }
 }

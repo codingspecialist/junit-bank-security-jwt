@@ -1,5 +1,7 @@
 package shop.mtcoding.bank.service;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,8 +15,10 @@ import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountDepositReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
+import shop.mtcoding.bank.dto.account.AccountReqDto.AccountWithdrawReqDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDepositRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountSaveRespDto;
+import shop.mtcoding.bank.dto.account.AccountRespDto.AccountWithdrawRespDto;
 import shop.mtcoding.bank.handler.ex.CustomApiException;
 
 @RequiredArgsConstructor
@@ -56,7 +60,7 @@ public class AccountService {
         }
 
         // 입금계좌 확인
-        Account depositAccountPS = accountRepository.findByNumber(accountDepositReqDto.getDepositAccountNumber())
+        Account depositAccountPS = accountRepository.findByNumber(accountDepositReqDto.getNumber())
                 .orElseThrow(() -> new CustomApiException("계좌를 찾을 수 없습니다"));
 
         // 0원 체크
@@ -81,6 +85,43 @@ public class AccountService {
 
         // DTO
         return new AccountDepositRespDto(depositAccountPS, transactionPS);
+    }
+
+    @Transactional
+    public AccountWithdrawRespDto 계좌출금(@Valid AccountWithdrawReqDto accountWithdrawReqDto, Long userId) {
+        // GUBUN값 검증
+        if (!accountWithdrawReqDto.getGubun().equals("WITHDRAW")) {
+            throw new CustomApiException("구분값 검증 실패");
+        }
+
+        // 출금계좌 확인
+        Account withdrawAccountPS = accountRepository.findByNumber(accountWithdrawReqDto.getNumber())
+                .orElseThrow(() -> new CustomApiException("계좌를 찾을 수 없습니다"));
+
+        // 출금계좌 소유자 확인
+        withdrawAccountPS.checkOwner(userId);
+
+        // 0원 체크
+        withdrawAccountPS.checkZeroAmount(accountWithdrawReqDto.getAmount());
+
+        // 출금 하기
+        withdrawAccountPS.withdraw(accountWithdrawReqDto.getAmount());
+
+        // 거래내역 남기기
+        Transaction transaction = Transaction.builder()
+                .depositAccount(null)
+                .withdrawAccount(withdrawAccountPS)
+                .depositAccountBalance(null)
+                .withdrawAccountBalance(withdrawAccountPS.getBalance())
+                .amount(accountWithdrawReqDto.getAmount())
+                .gubun(TransactionEnum.WITHDRAW)
+                .sender(withdrawAccountPS.getNumber() + "")
+                .reciver("ATM")
+                .build();
+        Transaction transactionPS = transactionRepository.save(transaction);
+
+        // DTO
+        return new AccountWithdrawRespDto(withdrawAccountPS, transactionPS);
     }
 
 }

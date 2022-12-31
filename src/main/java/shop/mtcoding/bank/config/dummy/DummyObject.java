@@ -39,7 +39,7 @@ public class DummyObject {
     protected Account newAccount(Long number, User user) {
         Account account = Account.builder()
                 .number(number)
-                .password("1234")
+                .password(1234L)
                 .balance(1000L)
                 .user(user)
                 .build();
@@ -50,7 +50,7 @@ public class DummyObject {
         Account account = Account.builder()
                 .id(id)
                 .number(number)
-                .password("1234")
+                .password(1234L)
                 .balance(1000L)
                 .user(user)
                 .createdAt(LocalDateTime.now())

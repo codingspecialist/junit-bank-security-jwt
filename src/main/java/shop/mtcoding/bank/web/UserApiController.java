@@ -33,7 +33,7 @@ public class UserApiController {
     }
 
     // user의 id를 주소로 받을 필요가 없다. session값으로 체크
-    @PutMapping("/user/login-user/password")
+    @PutMapping("/s/user/login-user/password")
     public ResponseEntity<?> updatePassword(
             @RequestBody @Valid UserPasswordUpdateReqDto userPasswordUpdateReqDto,
             BindingResult bindingResult,

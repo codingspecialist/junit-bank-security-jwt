@@ -39,7 +39,7 @@ public class Account {
     private Long number; // 계좌번호
 
     @Column(nullable = false, length = 4)
-    private String password; // 계좌비밀번호
+    private Long password; // 계좌비밀번호
 
     @Column(nullable = false)
     private Long balance; // 잔액 (디폴트 값 1000원)
@@ -56,7 +56,7 @@ public class Account {
     private LocalDateTime createdAt;
 
     @Builder
-    public Account(Long id, Long number, String password, Long balance, User user,
+    public Account(Long id, Long number, Long password, Long balance, User user,
             LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
         this.number = number;
@@ -73,8 +73,8 @@ public class Account {
         }
     }
 
-    public void checkSamePassword(String password) {
-        if (!this.password.equals(password)) {
+    public void checkSamePassword(Long password) {
+        if (this.password != password) {
             throw new CustomApiException("계좌 비밀번호 검증에 실패했습니다");
         }
     }
@@ -87,5 +87,9 @@ public class Account {
 
     public void deposit(Long amount) {
         balance = balance + amount;
+    }
+
+    public void withdraw(Long amount) {
+        balance = balance - amount;
     }
 }

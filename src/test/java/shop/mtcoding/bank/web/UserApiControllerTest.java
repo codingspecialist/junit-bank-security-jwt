@@ -107,7 +107,7 @@ public class UserApiControllerTest extends DummyObject {
 
         // when
         ResultActions resultActions = mvc
-                .perform(put("/api/user/login-user/password").content(requestBody)
+                .perform(put("/api/s/user/login-user/password").content(requestBody)
                         .contentType(APPLICATION_JSON_UTF8));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         log.debug("테스트 : " + responseBody);

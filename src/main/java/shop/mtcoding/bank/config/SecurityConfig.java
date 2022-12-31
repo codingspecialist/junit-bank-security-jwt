@@ -30,7 +30,7 @@ public class SecurityConfig {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        log.debug("디버그 : passwordEncoder Bean 등록됨");
+        // log.debug("디버그 : passwordEncoder Bean 등록됨");
         return new BCryptPasswordEncoder();
     }
 
@@ -38,7 +38,7 @@ public class SecurityConfig {
     public class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            log.debug("디버그 : SecurityConfig의 configure");
+            // log.debug("디버그 : SecurityConfig의 configure");
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
             http.addFilter(new JwtAuthenticationFilter(authenticationManager));
             http.addFilter(new JwtAuthorizationFilter(authenticationManager));
@@ -47,7 +47,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        log.debug("디버그 : SecurityConfig의 filterChain");
+        // log.debug("디버그 : SecurityConfig의 filterChain");
         http.headers().frameOptions().disable(); // iframe 허용안함
         http.csrf().disable(); // csrf 허용안함
         http.cors().configurationSource(configurationSource()); // cors 재정의
@@ -74,16 +74,14 @@ public class SecurityConfig {
         http.apply(new CustomSecurityFilterManager());
 
         http.authorizeHttpRequests()
-                .antMatchers("/api/transaction/**").authenticated()
-                .antMatchers("/api/user/**").authenticated()
-                .antMatchers("/api/account/**").authenticated()
+                .antMatchers("/api/s/**").authenticated()
                 .antMatchers("/api/admin/**").hasRole("" + UserEnum.ADMIN) // ROLE_ 안붙여도 됨
                 .anyRequest().permitAll();
         return http.build();
     }
 
     public CorsConfigurationSource configurationSource() {
-        log.debug("디버그 : SecurityConfig의 configurationSource");
+        // log.debug("디버그 : SecurityConfig의 configurationSource");
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");

@@ -83,14 +83,6 @@ public class RegexTest {
     }
 
     @Test
-    public void account_password_test() throws Exception {
-        String password = "1234";
-
-        boolean result = Pattern.matches("^[0-9]{4,4}$", password);
-        log.debug("테스트 : " + result);
-    }
-
-    @Test
     public void account_gubun_test() throws Exception {
         String gubun = "TRANSFER"; // WITHDRAW(8), DEPOSIT(7), TRANSFER(8)
 

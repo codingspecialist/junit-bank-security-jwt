@@ -20,16 +20,11 @@ public class LoginService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        log.debug("디버그 : loadUserByUsername 실행됨");
+        // log.debug("디버그 : loadUserByUsername 실행됨");
         User userPS = userRepository.findByUsername(username)
                 .orElseThrow(
                         () -> new InternalAuthenticationServiceException("인증 실패"));
         // request - 세션생성 - 세션사용 - response - 세션삭제
         return new LoginUser(userPS);
     }
-    // if (userOP.isPresent()) {
-    // return new LoginUser(userOP.get());
-    // } else {
-    // return null;
-    // }
 }
