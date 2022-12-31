@@ -91,6 +91,14 @@ public class RegexTest {
     }
 
     @Test
+    public void account_gubun_test2() throws Exception {
+        String gubun = "TRANSFER"; // WITHDRAW(8), DEPOSIT(7), TRANSFER(8)
+
+        boolean result = Pattern.matches("^(TRANSFER)$", gubun);
+        log.debug("테스트 : " + result);
+    }
+
+    @Test
     public void account_tel_test() throws Exception {
         String tel = "010-2222-7777";
 

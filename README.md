@@ -11,8 +11,10 @@
 https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html
 - Account 계좌등록 (완)
 - User 패스워드 수정 (완)
-- Account 삭제 (ADMIN, CUSTOMER) 
+- Account 삭제 (ADMIN, CUSTOMER) (완)
 - CustomForbiddenException 생성 (완)
+- 계좌입금, 출금, 이체 (컨트롤러 테스트) (완)
+- 계좌입금, 출금, 이체 (서비스 테스트)
 - Account 목록보기
 - 권한체크 (컨트롤러)
 

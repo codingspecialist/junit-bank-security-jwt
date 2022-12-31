@@ -93,4 +93,40 @@ public class AccountRespDto {
             }
         }
     }
+
+    @Setter
+    @Getter
+    public static class AccountTransferRespDto {
+        private Long id; // 계좌 ID
+        private Long number; // 계좌번호
+        private Long balance; // 잔액
+        private TransactionDto transaction; // 거래내역
+
+        public AccountTransferRespDto(Account account, Transaction transaction) {
+            this.id = account.getId();
+            this.number = account.getNumber();
+            this.balance = account.getBalance();
+            this.transaction = new TransactionDto(transaction);
+        }
+
+        @Getter
+        @Setter
+        public class TransactionDto {
+            private Long id;
+            private Long amount;
+            private String gubun; // 출금
+            private String sender; // 출금 계좌번호
+            private String reciver; // ATM
+            private String createdAt;
+
+            public TransactionDto(Transaction transaction) {
+                this.id = transaction.getId();
+                this.amount = transaction.getAmount();
+                this.gubun = transaction.getGubun().getValue();
+                this.sender = transaction.getSender();
+                this.reciver = transaction.getReciver();
+                this.createdAt = CustomDateUtil.toStringFormat(transaction.getCreatedAt());
+            }
+        }
+    }
 }

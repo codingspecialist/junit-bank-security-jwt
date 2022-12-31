@@ -49,7 +49,7 @@ public class AccountServiceTest extends DummyObject {
         // given
         AccountSaveReqDto accountSaveReqDto = new AccountSaveReqDto();
         accountSaveReqDto.setNumber(1111L);
-        accountSaveReqDto.setPassword("1234");
+        accountSaveReqDto.setPassword(1234L);
 
         // stub 1
         User ssar = newMockUser(1L, "ssar", "쌀");

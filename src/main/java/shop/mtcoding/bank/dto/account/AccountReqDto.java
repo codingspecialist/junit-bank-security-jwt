@@ -33,7 +33,7 @@ public class AccountReqDto {
         @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
         private Long number;
         private Long amount;
-        @Pattern(regexp = "^(WITHDRAW|DEPOSIT|TRANSFER)$", message = "구분값을 정확히 입력해주세요")
+        @Pattern(regexp = "^(DEPOSIT)$", message = "구분값을 정확히 입력해주세요")
         private String gubun;
         @Pattern(regexp = "^[0-9]{3}-[0-9]{4}-[0-9]{4}$", message = "전화번호 양식에 맞게 입력해주세요")
         private String tel;
@@ -47,7 +47,21 @@ public class AccountReqDto {
         @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
         private Long password;
         private Long amount;
-        @Pattern(regexp = "^(WITHDRAW|DEPOSIT|TRANSFER)$", message = "구분값을 정확히 입력해주세요")
+        @Pattern(regexp = "^(WITHDRAW)$", message = "구분값을 정확히 입력해주세요")
+        private String gubun;
+    }
+
+    @Getter
+    @Setter
+    public static class AccountTransferReqDto {
+        @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
+        private Long withdrawNumber;
+        @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
+        private Long depositNumber;
+        @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
+        private Long withdrawPassword;
+        private Long amount;
+        @Pattern(regexp = "^(TRANSFER)$", message = "구분값을 정확히 입력해주세요")
         private String gubun;
     }
 }

@@ -28,6 +28,7 @@ import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountDepositReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
+import shop.mtcoding.bank.dto.account.AccountReqDto.AccountTransferReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountWithdrawReqDto;
 
 @ActiveProfiles("test")
@@ -136,6 +137,30 @@ public class AccountApiControllerTest extends DummyObject {
         // when
         ResultActions resultActions = mvc
                 .perform(post("/api/s/account/withdraw").content(requestBody).contentType(APPLICATION_JSON_UTF8));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        log.debug("디버그 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isCreated());
+    }
+
+    @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @Test
+    public void transferAccount_test() throws Exception {
+        // given
+        AccountTransferReqDto transferReqDto = new AccountTransferReqDto();
+        transferReqDto.setWithdrawNumber(1111L);
+        transferReqDto.setDepositNumber(2222L);
+        transferReqDto.setAmount(100L);
+        transferReqDto.setWithdrawPassword(1234L);
+        transferReqDto.setGubun("TRANSFER");
+
+        String requestBody = om.writeValueAsString(transferReqDto);
+        log.debug("디버그 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(post("/api/s/account/transfer").content(requestBody).contentType(APPLICATION_JSON_UTF8));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         log.debug("디버그 : " + responseBody);
 
