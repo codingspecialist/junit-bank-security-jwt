@@ -1,5 +1,7 @@
 package shop.mtcoding.bank.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,7 @@ import shop.mtcoding.bank.handler.ex.CustomApiException;
 @Transactional(readOnly = true)
 @Service
 public class AccountService {
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
@@ -62,6 +65,7 @@ public class AccountService {
         // 입금계좌 확인
         Account depositAccountPS = accountRepository.findByNumber(accountDepositReqDto.getNumber())
                 .orElseThrow(() -> new CustomApiException("계좌를 찾을 수 없습니다"));
+        log.debug("디버그 : " + depositAccountPS.getBalance());
 
         // 입금 하기
         depositAccountPS.deposit(accountDepositReqDto.getAmount());
@@ -78,8 +82,9 @@ public class AccountService {
                 .reciver(depositAccountPS.getNumber() + "")
                 .tel(accountDepositReqDto.getTel())
                 .build();
-        Transaction transactionPS = transactionRepository.save(transaction);
 
+        Transaction transactionPS = transactionRepository.save(transaction);
+        log.debug("디버그 : " + transactionPS.getDepositAccountBalance());
         // DTO
         return new AccountDepositRespDto(depositAccountPS, transactionPS);
     }

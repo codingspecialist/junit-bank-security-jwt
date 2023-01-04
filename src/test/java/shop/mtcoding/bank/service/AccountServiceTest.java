@@ -135,6 +135,7 @@ public class AccountServiceTest extends DummyObject {
 
         // stub 2
         Account ssarAccountStub2 = newMockAccount(1L, 1111L, 1100L, ssar);
+
         Transaction transaction = newMockDepositTransaction(1L, ssarAccountStub2);
         when(transactionRepository.save(any())).thenReturn(transaction);
 
@@ -142,8 +143,10 @@ public class AccountServiceTest extends DummyObject {
         AccountDepositRespDto accountDepositRespDto = accountService.계좌입금(accountDepositReqDto);
         String requestBody = om.writeValueAsString(accountDepositRespDto);
         log.debug("디버그 : " + requestBody);
-        // then
 
+        // then
+        assertThat(ssarAccountStub1.getBalance()).isEqualTo(1100L);
+        assertThat(accountDepositRespDto.getTransaction().getDepositAccountBalance()).isEqualTo(1100L);
     }
 
 }
