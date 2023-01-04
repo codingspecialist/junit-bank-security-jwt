@@ -28,8 +28,10 @@ import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountDepositReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
+import shop.mtcoding.bank.dto.account.AccountReqDto.AccountWithdrawReqDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDepositRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountSaveRespDto;
+import shop.mtcoding.bank.dto.account.AccountRespDto.AccountWithdrawRespDto;
 import shop.mtcoding.bank.handler.ex.CustomApiException;
 
 /*
@@ -131,7 +133,8 @@ public class AccountServiceTest extends DummyObject {
         // stub 1
         User ssar = newMockUser(1L, "ssar", " 쌀");
         Account ssarAccountStub1 = newMockAccount(1L, 1111L, 1000L, ssar);
-        when(accountRepository.findByNumber(any())).thenReturn(Optional.of(ssarAccountStub1));
+        when(accountRepository.findByNumber(any()))
+                .thenReturn(Optional.of(ssarAccountStub1));
 
         // stub 2
         Account ssarAccountStub2 = newMockAccount(1L, 1111L, 1100L, ssar);
@@ -147,6 +150,37 @@ public class AccountServiceTest extends DummyObject {
         // then
         assertThat(ssarAccountStub1.getBalance()).isEqualTo(1100L);
         assertThat(accountDepositRespDto.getTransaction().getDepositAccountBalance()).isEqualTo(1100L);
+    }
+
+    @Test
+    public void 계좌출금_test() throws Exception {
+        // given
+        Long userId = 1L;
+        AccountWithdrawReqDto accountWithdrawReqDto = new AccountWithdrawReqDto();
+        accountWithdrawReqDto.setNumber(1111L);
+        accountWithdrawReqDto.setPassword(1234L);
+        accountWithdrawReqDto.setAmount(100L);
+        accountWithdrawReqDto.setGubun("DEPOSIT");
+
+        // stub 1
+        User ssar = newMockUser(1L, "ssar", " 쌀");
+        Account ssarAccountStub1 = newMockAccount(1L, 1111L, 1000L, ssar);
+        when(accountRepository.findByNumber(any()))
+                .thenReturn(Optional.of(ssarAccountStub1));
+
+        // stub 2
+        Account ssarAccountStub2 = newMockAccount(1L, 1111L, 900L, ssar);
+        Transaction transaction = newMockWithdrawTransaction(1L, ssarAccountStub2);
+        when(transactionRepository.save(any())).thenReturn(transaction);
+
+        // when
+        AccountWithdrawRespDto accountWithdrawRespDto = accountService.계좌출금(accountWithdrawReqDto, userId);
+        String responseBody = om.writeValueAsString(accountWithdrawRespDto);
+        log.debug("디버그 : " + responseBody);
+
+        // then
+        assertThat(ssarAccountStub1.getBalance()).isEqualTo(900L);
+        assertThat(accountWithdrawRespDto.getTransaction().getWithdrawAccountBalance()).isEqualTo(900L);
     }
 
 }

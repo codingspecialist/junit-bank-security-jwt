@@ -78,4 +78,22 @@ public class DummyObject {
                 .build();
         return transaction;
     }
+
+    protected Transaction newMockWithdrawTransaction(Long id, Account account) {
+        Transaction transaction = Transaction.builder()
+                .id(id)
+                .depositAccount(null)
+                .withdrawAccount(account)
+                .depositAccountBalance(null)
+                .withdrawAccountBalance(account.getBalance())
+                .amount(100L)
+                .gubun(TransactionEnum.WITHDRAW)
+                .sender(account.getNumber() + "")
+                .reciver("ATM")
+                .tel("010-2222-7777")
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+        return transaction;
+    }
 }
