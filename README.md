@@ -110,7 +110,8 @@ public void dataSetting() {
     User cos = userRepository.save(newUser("cos", "코스,"));
     User love = userRepository.save(newUser("love", "러브"));
     User admin = userRepository.save(newUser("admin", "관리자"));
-    Account ssarAccount = accountRepository.save(newAccount(1111L, ssar));
+    Account ssarAccount1 = accountRepository.save(newAccount(1111L, ssar));
+    Account ssarAccount2 = accountRepository.save(newAccount(4444L, ssar));
     Account cosAccount = accountRepository.save(newAccount(2222L, cos));
     Account loveAccount = accountRepository.save(newAccount(3333L, love));
     Transaction withdrawTransaction1 = transactionRepository

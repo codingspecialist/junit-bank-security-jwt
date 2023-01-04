@@ -1,6 +1,7 @@
 package shop.mtcoding.bank.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -54,7 +55,8 @@ public class AccountApiControllerTest extends DummyObject {
         User cos = userRepository.save(newUser("cos", "코스,"));
         User love = userRepository.save(newUser("love", "러브"));
         User admin = userRepository.save(newUser("admin", "관리자"));
-        Account ssarAccount = accountRepository.save(newAccount(1111L, ssar));
+        Account ssarAccount1 = accountRepository.save(newAccount(1111L, ssar));
+        Account ssarAccount2 = accountRepository.save(newAccount(4444L, ssar));
         Account cosAccount = accountRepository.save(newAccount(2222L, cos));
         Account loveAccount = accountRepository.save(newAccount(3333L, love));
     }
@@ -80,6 +82,21 @@ public class AccountApiControllerTest extends DummyObject {
         // then
         resultActions.andExpect(status().isCreated());
 
+    }
+
+    @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @Test
+    public void findUserAccount_test() throws Exception {
+        // given
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(get("/api/s/account/login-user"));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        log.debug("디버그 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
     }
 
     @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
