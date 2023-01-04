@@ -20,6 +20,7 @@ import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountTransferReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountWithdrawReqDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDepositRespDto;
+import shop.mtcoding.bank.dto.account.AccountRespDto.AccountListRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountSaveRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountTransferRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountWithdrawRespDto;
@@ -43,11 +44,12 @@ public class AccountService {
     }
 
     // 계좌목록보기
-    public void 계좌목록보기_유저별(Long userId) {
+    public AccountListRespDto 계좌목록보기_유저별(Long userId) {
         User userPS = userRepository.findById(userId).orElseThrow(
                 () -> new CustomApiException("유저를 찾을 수 없습니다"));
 
         List<Account> accountListPS = accountRepository.findByUser_id(userPS.getId());
+        return new AccountListRespDto(userPS, accountListPS);
     }
 
     // 삭제는 보통 put요청으로 update를 하고, 상태변경을 한다. 계좌 활성화 상태!!

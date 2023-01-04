@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,7 @@ import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountTransferReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountWithdrawReqDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDepositRespDto;
+import shop.mtcoding.bank.dto.account.AccountRespDto.AccountListRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountSaveRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountTransferRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountWithdrawRespDto;
@@ -59,7 +62,6 @@ public class AccountServiceTest extends DummyObject {
     @Spy
     private ObjectMapper om;
 
-    // DTO 테스트
     @Test
     public void 계좌등록_test() throws Exception {
         // given
@@ -84,7 +86,30 @@ public class AccountServiceTest extends DummyObject {
         assertThat(accountSaveRespDto.getNumber()).isEqualTo(1111L);
     }
 
-    // 계좌 소유자 확인 테스트
+    @Test
+    public void 계좌목록보기_유저별_test() throws Exception {
+        // given
+        Long userId = 1L;
+
+        // stub
+        User ssar = newMockUser(1L, "ssar", "쌀");
+        when(userRepository.findById(userId)).thenReturn(Optional.of(ssar));
+
+        Account ssarAccount1 = newMockAccount(1L, 1111L, 1000L, ssar);
+        Account ssarAccount2 = newMockAccount(2L, 2222L, 1000L, ssar);
+        List<Account> accountList = Arrays.asList(ssarAccount1, ssarAccount2);
+        when(accountRepository.findByUser_id(any())).thenReturn(accountList);
+
+        // when
+        AccountListRespDto accountListRespDto = accountService.계좌목록보기_유저별(userId);
+        log.debug("디버그 : size : " + accountListRespDto.getAccounts().size());
+        log.debug("디버그 : " + accountListRespDto.getFullname());
+
+        // then
+        assertThat(accountListRespDto.getFullname()).isEqualTo("쌀");
+        assertThat(accountListRespDto.getAccounts().size()).isEqualTo(2);
+    }
+
     @Test
     public void 계좌삭제_test1() throws Exception {
         // given
@@ -100,7 +125,6 @@ public class AccountServiceTest extends DummyObject {
         assertThrows(CustomApiException.class, () -> accountService.계좌삭제(accountNumber, userId));
     }
 
-    // 계좌 소유자 확인 테스트
     @Test
     public void 계좌삭제_test2() throws Exception {
         // given

@@ -50,7 +50,6 @@ public class AccountRepositoryTest extends DummyObject {
 
         // then
         assertThat(accountListPS.size()).isEqualTo(2);
-
     }
 
     private void autoincrementReset() {
