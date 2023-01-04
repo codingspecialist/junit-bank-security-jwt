@@ -14,7 +14,7 @@ https://docs.spring.io/spring-security/reference/servlet/authorization/authorize
 - Account 삭제 (ADMIN, CUSTOMER) (완)
 - CustomForbiddenException 생성 (완)
 - 계좌입금, 출금, 이체 (컨트롤러 테스트) (완)
-- 계좌입금, 출금, 이체 (서비스 테스트)
+- 계좌입금, 출금, 이체 (서비스 테스트) (완)
 - Account 목록보기
 - 권한체크 (컨트롤러)
 

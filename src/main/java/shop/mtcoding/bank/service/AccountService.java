@@ -1,5 +1,7 @@
 package shop.mtcoding.bank.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,14 @@ public class AccountService {
                 () -> new CustomApiException("유저를 찾을 수 없습니다"));
         Account accountPS = accountRepository.save(accountSaveReqDto.toEntity(userPS));
         return new AccountSaveRespDto(accountPS);
+    }
+
+    // 계좌목록보기
+    public void 계좌목록보기_유저별(Long userId) {
+        User userPS = userRepository.findById(userId).orElseThrow(
+                () -> new CustomApiException("유저를 찾을 수 없습니다"));
+
+        List<Account> accountListPS = accountRepository.findByUser_id(userPS.getId());
     }
 
     // 삭제는 보통 put요청으로 update를 하고, 상태변경을 한다. 계좌 활성화 상태!!
@@ -178,5 +188,7 @@ public class AccountService {
         // DTO
         return new AccountTransferRespDto(withdrawAccountPS, transactionPS);
     }
+
+    // 계좌상세보기
 
 }

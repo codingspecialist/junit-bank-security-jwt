@@ -1,5 +1,6 @@
 package shop.mtcoding.bank.domain.account;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("SELECT ac FROM Account ac JOIN FETCH ac.user u WHERE ac.number = :number")
     Optional<Account> findByNumber(@Param("number") Long number);
+
+    List<Account> findByUser_id(Long id);
 }
