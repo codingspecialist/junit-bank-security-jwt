@@ -69,6 +69,8 @@ public class Account {
     }
 
     public void checkOwner(Long userId) {
+        System.out.println("테스트 : userId : " + userId);
+        System.out.println("테스트 : user.getId() : " + user.getId());
         if (user.getId() != userId) {
             throw new CustomApiException("계좌 소유자가 아닙니다");
         }
@@ -87,5 +89,11 @@ public class Account {
 
     public void withdraw(Long amount) {
         balance = balance - amount;
+    }
+
+    public void checkBalance(Long amount) {
+        if (this.balance < amount) {
+            throw new CustomApiException("계좌 잔액이 부족합니다");
+        }
     }
 }

@@ -106,6 +106,9 @@ public class AccountService {
         // 출금계좌 비밀번호 확인
         withdrawAccountPS.checkSamePassword(accountWithdrawReqDto.getPassword());
 
+        // 출금계좌 잔액 확인
+        withdrawAccountPS.checkBalance(accountWithdrawReqDto.getAmount());
+
         // 출금 하기
         withdrawAccountPS.withdraw(accountWithdrawReqDto.getAmount());
 
@@ -152,16 +155,19 @@ public class AccountService {
         // 출금계좌 비밀번호 확인
         withdrawAccountPS.checkSamePassword(accountTransferReqDto.getWithdrawPassword());
 
+        // 출금계좌 잔액 확인
+        withdrawAccountPS.checkBalance(accountTransferReqDto.getAmount());
+
         // 이체하기
         withdrawAccountPS.withdraw(accountTransferReqDto.getAmount());
         depositAccountPS.deposit(accountTransferReqDto.getAmount());
 
         // 거래내역 남기기
         Transaction transaction = Transaction.builder()
-                .depositAccount(depositAccountPS)
                 .withdrawAccount(withdrawAccountPS)
-                .depositAccountBalance(depositAccountPS.getBalance())
+                .depositAccount(depositAccountPS)
                 .withdrawAccountBalance(withdrawAccountPS.getBalance())
+                .depositAccountBalance(depositAccountPS.getBalance())
                 .amount(accountTransferReqDto.getAmount())
                 .gubun(TransactionEnum.TRANSFER)
                 .sender(withdrawAccountPS.getNumber() + "")

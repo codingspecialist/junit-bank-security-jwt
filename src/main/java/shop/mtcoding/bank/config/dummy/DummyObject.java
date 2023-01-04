@@ -64,10 +64,10 @@ public class DummyObject {
     protected Transaction newMockDepositTransaction(Long id, Account account) {
         Transaction transaction = Transaction.builder()
                 .id(id)
-                .depositAccount(account)
                 .withdrawAccount(null)
-                .depositAccountBalance(account.getBalance())
+                .depositAccount(account)
                 .withdrawAccountBalance(null)
+                .depositAccountBalance(account.getBalance())
                 .amount(100L)
                 .gubun(TransactionEnum.DEPOSIT)
                 .sender("ATM")
@@ -82,15 +82,31 @@ public class DummyObject {
     protected Transaction newMockWithdrawTransaction(Long id, Account account) {
         Transaction transaction = Transaction.builder()
                 .id(id)
-                .depositAccount(null)
                 .withdrawAccount(account)
-                .depositAccountBalance(null)
+                .depositAccount(null)
                 .withdrawAccountBalance(account.getBalance())
+                .depositAccountBalance(null)
                 .amount(100L)
                 .gubun(TransactionEnum.WITHDRAW)
                 .sender(account.getNumber() + "")
                 .reciver("ATM")
-                .tel("010-2222-7777")
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+        return transaction;
+    }
+
+    protected Transaction newMockTransferTransaction(Long id, Account withdrawAccount, Account depositAccount) {
+        Transaction transaction = Transaction.builder()
+                .id(id)
+                .withdrawAccount(withdrawAccount)
+                .depositAccount(depositAccount)
+                .withdrawAccountBalance(withdrawAccount.getBalance())
+                .depositAccountBalance(depositAccount.getBalance())
+                .amount(100L)
+                .gubun(TransactionEnum.TRANSFER)
+                .sender(withdrawAccount.getNumber() + "")
+                .reciver(depositAccount.getNumber() + "")
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
