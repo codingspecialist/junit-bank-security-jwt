@@ -106,24 +106,24 @@ create table transaction (
 ## 개발 더미 데이터 (통합 or 레포)
 ```java
 public void dataSetting() {
-    User ssar = userRepository.save(newUser("ssar", "쌀"));
-    User cos = userRepository.save(newUser("cos", "코스,"));
-    User love = userRepository.save(newUser("love", "러브"));
-    User admin = userRepository.save(newUser("admin", "관리자"));
-    Account ssarAccount1 = accountRepository.save(newAccount(1111L, ssar));
-    Account ssarAccount2 = accountRepository.save(newAccount(4444L, ssar));
-    Account cosAccount = accountRepository.save(newAccount(2222L, cos));
-    Account loveAccount = accountRepository.save(newAccount(3333L, love));
-    Transaction withdrawTransaction1 = transactionRepository
-                    .save(newWithdrawTransaction(100L, ssarAccount));
-    Transaction depositTransaction1 = transactionRepository
-                    .save(newDepositTransaction(100L, cosAccount));
-    Transaction transferTransaction1 = transactionRepository
-                    .save(newTransferTransaction(100L, ssarAccount, cosAccount));
-    Transaction transferTransaction2 = transactionRepository
-                    .save(newTransferTransaction(100L, ssarAccount, loveAccount));
-    Transaction transferTransaction3 = transactionRepository
-                    .save(newTransferTransaction(100L, cosAccount, ssarAccount));
+        User ssar = userRepository.save(newUser("ssar", "쌀"));
+        User cos = userRepository.save(newUser("cos", "코스,"));
+        User love = userRepository.save(newUser("love", "러브"));
+        User admin = userRepository.save(newUser("admin", "관리자"));
+        Account ssarAccount1 = accountRepository.save(newAccount(1111L, ssar));
+        Account cosAccount = accountRepository.save(newAccount(2222L, cos));
+        Account loveAccount = accountRepository.save(newAccount(3333L, love));
+        Account ssarAccount2 = accountRepository.save(newAccount(4444L, ssar));
+        Transaction withdrawTransaction1 = transactionRepository
+                .save(newWithdrawTransaction(100L, ssarAccount1));
+        Transaction depositTransaction1 = transactionRepository
+                .save(newDepositTransaction(100L, cosAccount));
+        Transaction transferTransaction1 = transactionRepository
+                .save(newTransferTransaction(100L, ssarAccount1, cosAccount));
+        Transaction transferTransaction2 = transactionRepository
+                .save(newTransferTransaction(100L, ssarAccount1, loveAccount));
+        Transaction transferTransaction3 = transactionRepository
+                .save(newTransferTransaction(100L, cosAccount, ssarAccount1));
 }
 ```
 ## 테스트 더미 데이터 (서비스)

@@ -112,4 +112,47 @@ public class DummyObject {
                 .build();
         return transaction;
     }
+
+    protected Transaction newDepositTransaction(Account account) {
+        Transaction transaction = Transaction.builder()
+                .withdrawAccount(null)
+                .depositAccount(account)
+                .withdrawAccountBalance(null)
+                .depositAccountBalance(account.getBalance())
+                .amount(100L)
+                .gubun(TransactionEnum.DEPOSIT)
+                .sender("ATM")
+                .reciver(account.getNumber() + "")
+                .tel("010-2222-7777")
+                .build();
+        return transaction;
+    }
+
+    protected Transaction newWithdrawTransaction(Account account) {
+        Transaction transaction = Transaction.builder()
+                .withdrawAccount(account)
+                .depositAccount(null)
+                .withdrawAccountBalance(account.getBalance())
+                .depositAccountBalance(null)
+                .amount(100L)
+                .gubun(TransactionEnum.WITHDRAW)
+                .sender(account.getNumber() + "")
+                .reciver("ATM")
+                .build();
+        return transaction;
+    }
+
+    protected Transaction newTransferTransaction(Account withdrawAccount, Account depositAccount) {
+        Transaction transaction = Transaction.builder()
+                .withdrawAccount(withdrawAccount)
+                .depositAccount(depositAccount)
+                .withdrawAccountBalance(withdrawAccount.getBalance())
+                .depositAccountBalance(depositAccount.getBalance())
+                .amount(100L)
+                .gubun(TransactionEnum.TRANSFER)
+                .sender(withdrawAccount.getNumber() + "")
+                .reciver(depositAccount.getNumber() + "")
+                .build();
+        return transaction;
+    }
 }
