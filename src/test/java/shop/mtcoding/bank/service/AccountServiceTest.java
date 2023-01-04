@@ -141,8 +141,8 @@ public class AccountServiceTest extends DummyObject {
 
         // when
         AccountDepositRespDto accountDepositRespDto = accountService.계좌입금(accountDepositReqDto);
-        String requestBody = om.writeValueAsString(accountDepositRespDto);
-        log.debug("디버그 : " + requestBody);
+        String responseBody = om.writeValueAsString(accountDepositRespDto);
+        log.debug("디버그 : " + responseBody);
 
         // then
         assertThat(ssarAccountStub1.getBalance()).isEqualTo(1100L);
