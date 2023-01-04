@@ -1,5 +1,7 @@
 package shop.mtcoding.bank.dto.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 import shop.mtcoding.bank.domain.account.Account;
@@ -39,19 +41,22 @@ public class AccountRespDto {
         @Setter
         public class TransactionDto {
             private Long id;
-            private Long amount;
             private String gubun; // 입금
             private String sender; // ATM
             private String reciver;
+            private Long amount;
+            @JsonIgnore
+            private Long depositAccountBalance;
             private String tel;
             private String createdAt;
 
             public TransactionDto(Transaction transaction) {
                 this.id = transaction.getId();
-                this.amount = transaction.getAmount();
                 this.gubun = transaction.getGubun().getValue();
                 this.sender = transaction.getSender();
                 this.reciver = transaction.getReciver();
+                this.amount = transaction.getAmount();
+                this.amount = transaction.getDepositAccountBalance();
                 this.tel = transaction.getTel();
                 this.createdAt = CustomDateUtil.toStringFormat(transaction.getCreatedAt());
             }
@@ -77,18 +82,20 @@ public class AccountRespDto {
         @Setter
         public class TransactionDto {
             private Long id;
-            private Long amount;
             private String gubun; // 출금
             private String sender; // 출금 계좌번호
             private String reciver; // ATM
+            private Long amount;
+            private Long withdrawAccountBalance;
             private String createdAt;
 
             public TransactionDto(Transaction transaction) {
                 this.id = transaction.getId();
-                this.amount = transaction.getAmount();
                 this.gubun = transaction.getGubun().getValue();
                 this.sender = transaction.getSender();
                 this.reciver = transaction.getReciver();
+                this.amount = transaction.getAmount();
+                this.withdrawAccountBalance = transaction.getWithdrawAccountBalance();
                 this.createdAt = CustomDateUtil.toStringFormat(transaction.getCreatedAt());
             }
         }
@@ -113,18 +120,23 @@ public class AccountRespDto {
         @Setter
         public class TransactionDto {
             private Long id;
-            private Long amount;
             private String gubun; // 출금
             private String sender; // 출금 계좌번호
             private String reciver; // ATM
+            private Long amount;
+            private Long withdrawAccountBalance;
+            @JsonIgnore
+            private Long depositAccountBalance;
             private String createdAt;
 
             public TransactionDto(Transaction transaction) {
                 this.id = transaction.getId();
-                this.amount = transaction.getAmount();
                 this.gubun = transaction.getGubun().getValue();
                 this.sender = transaction.getSender();
                 this.reciver = transaction.getReciver();
+                this.amount = transaction.getAmount();
+                this.withdrawAccountBalance = transaction.getWithdrawAccountBalance();
+                this.depositAccountBalance = transaction.getDepositAccountBalance();
                 this.createdAt = CustomDateUtil.toStringFormat(transaction.getCreatedAt());
             }
         }

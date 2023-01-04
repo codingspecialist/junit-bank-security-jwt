@@ -22,12 +22,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import shop.mtcoding.bank.config.dummy.DummyObject;
 import shop.mtcoding.bank.domain.account.Account;
 import shop.mtcoding.bank.domain.account.AccountRepository;
+import shop.mtcoding.bank.domain.transaction.Transaction;
+import shop.mtcoding.bank.domain.transaction.TransactionRepository;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
+import shop.mtcoding.bank.dto.account.AccountReqDto.AccountDepositReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
+import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDepositRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountSaveRespDto;
 import shop.mtcoding.bank.handler.ex.CustomApiException;
 
+/*
+        * 입금하기
+        * insert, update, delete에서 하나의 stub은 다음 stub에 영향을 주면 안된다.
+        * when에서 정의해둔 객체를 다른 곳에서 사용하게 되면 실행시점에 값이 변경될 수 있기 떄문이다.
+*/
 @ExtendWith(MockitoExtension.class)
 public class AccountServiceTest extends DummyObject {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -39,6 +48,9 @@ public class AccountServiceTest extends DummyObject {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private TransactionRepository transactionRepository;
 
     @Spy
     private ObjectMapper om;
@@ -56,7 +68,7 @@ public class AccountServiceTest extends DummyObject {
         when(userRepository.findById(ssar.getId())).thenReturn(Optional.of(ssar));
 
         // stub 2
-        Account ssarAccount = newMockAccount(1L, 1111L, ssar);
+        Account ssarAccount = newMockAccount(1L, 1111L, 1000L, ssar);
         when(accountRepository.save(any())).thenReturn(ssarAccount);
 
         // when
@@ -77,7 +89,7 @@ public class AccountServiceTest extends DummyObject {
 
         // stub
         User ssar = newMockUser(1L, "ssar", "쌀");
-        Account ssarAccount = newMockAccount(1L, 1111L, ssar);
+        Account ssarAccount = newMockAccount(1L, 1111L, 1000L, ssar);
         when(accountRepository.findByNumber(accountNumber)).thenReturn(Optional.of(ssarAccount));
 
         // when then
@@ -93,7 +105,7 @@ public class AccountServiceTest extends DummyObject {
 
         // stub
         User ssar = newMockUser(1L, "ssar", "쌀");
-        Account ssarAccount = newMockAccount(1L, 1111L, ssar);
+        Account ssarAccount = newMockAccount(1L, 1111L, 1000L, ssar);
         when(accountRepository.findByNumber(accountNumber)).thenReturn(Optional.of(ssarAccount));
 
         // when
@@ -105,6 +117,33 @@ public class AccountServiceTest extends DummyObject {
 
         // then
         fail("예외 발생 안함");
+    }
+
+    @Test
+    public void 계좌입금_test() throws Exception {
+        // given
+        AccountDepositReqDto accountDepositReqDto = new AccountDepositReqDto();
+        accountDepositReqDto.setNumber(1111L);
+        accountDepositReqDto.setAmount(100L);
+        accountDepositReqDto.setGubun("DEPOSIT");
+        accountDepositReqDto.setTel("010-2222-6666");
+
+        // stub 1
+        User ssar = newMockUser(1L, "ssar", " 쌀");
+        Account ssarAccountStub1 = newMockAccount(1L, 1111L, 1000L, ssar);
+        when(accountRepository.findByNumber(any())).thenReturn(Optional.of(ssarAccountStub1));
+
+        // stub 2
+        Account ssarAccountStub2 = newMockAccount(1L, 1111L, 1100L, ssar);
+        Transaction transaction = newMockDepositTransaction(1L, ssarAccountStub2);
+        when(transactionRepository.save(any())).thenReturn(transaction);
+
+        // when
+        AccountDepositRespDto accountDepositRespDto = accountService.계좌입금(accountDepositReqDto);
+        String requestBody = om.writeValueAsString(accountDepositRespDto);
+        log.debug("디버그 : " + requestBody);
+        // then
+
     }
 
 }

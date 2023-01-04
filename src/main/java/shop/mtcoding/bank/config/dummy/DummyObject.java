@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import shop.mtcoding.bank.domain.account.Account;
+import shop.mtcoding.bank.domain.transaction.Transaction;
+import shop.mtcoding.bank.domain.transaction.TransactionEnum;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserEnum;
 
@@ -46,16 +48,34 @@ public class DummyObject {
         return account;
     }
 
-    protected Account newMockAccount(Long id, Long number, User user) {
+    protected Account newMockAccount(Long id, Long number, Long balance, User user) {
         Account account = Account.builder()
                 .id(id)
                 .number(number)
                 .password(1234L)
-                .balance(1000L)
+                .balance(balance)
                 .user(user)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
         return account;
+    }
+
+    protected Transaction newMockDepositTransaction(Long id, Account account) {
+        Transaction transaction = Transaction.builder()
+                .id(id)
+                .depositAccount(account)
+                .withdrawAccount(null)
+                .depositAccountBalance(account.getBalance())
+                .withdrawAccountBalance(null)
+                .amount(100L)
+                .gubun(TransactionEnum.DEPOSIT)
+                .sender("ATM")
+                .reciver(account.getNumber() + "")
+                .tel("010-2222-7777")
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+        return transaction;
     }
 }
