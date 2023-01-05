@@ -43,7 +43,7 @@ public class TransactionQueryRepositoryTest extends DummyObject {
     }
 
     @Test
-    public void findByAccountId_deposit_test() throws Exception {
+    public void findByAccountNumber_deposit_test() throws Exception {
         // given
         Long userId = 1L;
 

@@ -128,7 +128,20 @@ public void dataSetting() {
 ```
 ## 테스트 더미 데이터 (서비스)
 ```java
-
+User ssar = newMockUser(1L, "ssar", "쌀");
+User cos = newMockUser(2L, "cos", "코스,");
+User love = newMockUser(3L, "love", "러브");
+Account ssarAccount = newMockAccount(1L, 1111L, 1000L, ssar);
+Account cosAccount = newMockAccount(2L, 2222L, 1000L, cos);
+Account loveAccount = newMockAccount(3L, 3333L, 1000L, love);
+Transaction withdrawTransaction1 = newMockWithdrawTransaction(1L, ssarAccount);
+Transaction depositTransaction1 = newMockDepositTransaction(2L, ssarAccount);
+Transaction transferTransaction1 = newMockTransferTransaction(3L, ssarAccount, cosAccount);
+Transaction transferTransaction2 = newMockTransferTransaction(4L, ssarAccount, loveAccount);
+Transaction transferTransaction3 = newMockTransferTransaction(5L, cosAccount, ssarAccount);
+List<Transaction> transactions = Arrays.asList(withdrawTransaction1, depositTransaction1,
+                transferTransaction1,
+                transferTransaction2, transferTransaction3);
 ```
 
 ## 통합테스트 기본 어노테이션 세팅
