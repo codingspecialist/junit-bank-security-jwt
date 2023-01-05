@@ -75,7 +75,7 @@ public class TransactionApiControllerTest extends DummyObject {
     public void findTransactionList_test() throws Exception {
         // given
         Long accountNumber = 1111L;
-        String gubun = "ALL";
+        String gubun = "ALL"; // DEPOSIT, WITHDRAW
         String page = "0";
 
         // when
