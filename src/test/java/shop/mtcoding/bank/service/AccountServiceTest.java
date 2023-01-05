@@ -163,7 +163,7 @@ public class AccountServiceTest extends DummyObject {
                 .thenReturn(Optional.of(ssarAccountStub1));
 
         // stub 2
-        Account ssarAccountStub2 = newMockAccount(1L, 1111L, 1100L, ssar);
+        Account ssarAccountStub2 = newMockAccount(1L, 1111L, 1000L, ssar);
 
         Transaction transaction = newMockDepositTransaction(1L, ssarAccountStub2);
         when(transactionRepository.save(any())).thenReturn(transaction);
@@ -195,7 +195,7 @@ public class AccountServiceTest extends DummyObject {
                 .thenReturn(Optional.of(ssarAccountStub1));
 
         // stub 2
-        Account ssarAccountStub2 = newMockAccount(1L, 1111L, 900L, ssar);
+        Account ssarAccountStub2 = newMockAccount(1L, 1111L, 1000L, ssar);
         Transaction transaction = newMockWithdrawTransaction(1L, ssarAccountStub2);
         when(transactionRepository.save(any())).thenReturn(transaction);
 
@@ -232,8 +232,8 @@ public class AccountServiceTest extends DummyObject {
                 .thenReturn(Optional.of(cosAccountStub1));
 
         // stub 2
-        Account ssarAccountStub2 = newMockAccount(1L, 1111L, 900L, ssar);
-        Account cosAccountStub2 = newMockAccount(2L, 2222L, 1100L, cos);
+        Account ssarAccountStub2 = newMockAccount(1L, 1111L, 1000L, ssar);
+        Account cosAccountStub2 = newMockAccount(2L, 2222L, 1000L, cos);
         Transaction transaction = newMockTransferTransaction(1L, ssarAccountStub2, cosAccountStub2);
         when(transactionRepository.save(any())).thenReturn(transaction);
 

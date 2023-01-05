@@ -62,6 +62,7 @@ public class DummyObject {
     }
 
     protected Transaction newMockDepositTransaction(Long id, Account account) {
+        account.deposit(100L);
         Transaction transaction = Transaction.builder()
                 .id(id)
                 .withdrawAccount(null)
@@ -80,6 +81,7 @@ public class DummyObject {
     }
 
     protected Transaction newMockWithdrawTransaction(Long id, Account account) {
+        account.withdraw(100L);
         Transaction transaction = Transaction.builder()
                 .id(id)
                 .withdrawAccount(account)
@@ -97,6 +99,8 @@ public class DummyObject {
     }
 
     protected Transaction newMockTransferTransaction(Long id, Account withdrawAccount, Account depositAccount) {
+        withdrawAccount.withdraw(100L);
+        depositAccount.deposit(100L);
         Transaction transaction = Transaction.builder()
                 .id(id)
                 .withdrawAccount(withdrawAccount)
@@ -114,6 +118,7 @@ public class DummyObject {
     }
 
     protected Transaction newDepositTransaction(Account account) {
+        account.deposit(100L);
         Transaction transaction = Transaction.builder()
                 .withdrawAccount(null)
                 .depositAccount(account)
@@ -129,6 +134,7 @@ public class DummyObject {
     }
 
     protected Transaction newWithdrawTransaction(Account account) {
+        account.withdraw(100L);
         Transaction transaction = Transaction.builder()
                 .withdrawAccount(account)
                 .depositAccount(null)
@@ -143,6 +149,8 @@ public class DummyObject {
     }
 
     protected Transaction newTransferTransaction(Account withdrawAccount, Account depositAccount) {
+        withdrawAccount.withdraw(100L);
+        depositAccount.deposit(100L);
         Transaction transaction = Transaction.builder()
                 .withdrawAccount(withdrawAccount)
                 .depositAccount(depositAccount)

@@ -58,6 +58,39 @@ public class TransactionQueryRepositoryTest extends DummyObject {
         assertThat(transactionListPS.get(0).getDepositAccountBalance()).isEqualTo(800L);
     }
 
+    @Test
+    public void findByAccountId_withdraw_test() throws Exception {
+        // given
+        Long userId = 1L;
+
+        // when
+        List<Transaction> transactionListPS = transactionQueryRepository.findByAccountId(userId, "WITHDRAW", 0);
+        log.debug("디버그 : size : " + transactionListPS.size());
+        log.debug("디버그 : " + transactionListPS.get(2).getSender());
+        log.debug("디버그 : " + transactionListPS.get(2).getReciver());
+        log.debug("디버그 : " + transactionListPS.get(2).getWithdrawAccountBalance());
+
+        // then
+        assertThat(transactionListPS.get(2).getWithdrawAccountBalance()).isEqualTo(700L);
+    }
+
+    @Test
+    public void findByAccountId_all_test() throws Exception {
+        // given
+        Long userId = 1L;
+
+        // when
+        List<Transaction> transactionListPS = transactionQueryRepository.findByAccountId(userId, "ALL", 0);
+        log.debug("디버그 : size : " + transactionListPS.size());
+        log.debug("디버그 : " + transactionListPS.get(3).getSender());
+        log.debug("디버그 : " + transactionListPS.get(3).getReciver());
+        log.debug("디버그 : " + transactionListPS.get(3).getWithdrawAccountBalance());
+        log.debug("디버그 : " + transactionListPS.get(3).getDepositAccountBalance());
+
+        // then
+        assertThat(transactionListPS.get(3).getDepositAccountBalance()).isEqualTo(800L);
+    }
+
     private void dataSetting() {
         User ssar = userRepository.save(newUser("ssar", "쌀"));
         User cos = userRepository.save(newUser("cos", "코스,"));
@@ -67,30 +100,16 @@ public class TransactionQueryRepositoryTest extends DummyObject {
         Account cosAccount = accountRepository.save(newAccount(2222L, cos));
         Account loveAccount = accountRepository.save(newAccount(3333L, love));
         Account ssarAccount2 = accountRepository.save(newAccount(4444L, ssar));
-
-        ssarAccount1.withdraw(100L);
         Transaction withdrawTransaction1 = transactionRepository
                 .save(newWithdrawTransaction(ssarAccount1));
-
-        cosAccount.deposit(100L);
         Transaction depositTransaction1 = transactionRepository
                 .save(newDepositTransaction(cosAccount));
-
-        ssarAccount1.withdraw(100L);
-        cosAccount.deposit(100L);
         Transaction transferTransaction1 = transactionRepository
                 .save(newTransferTransaction(ssarAccount1, cosAccount));
-
-        ssarAccount1.withdraw(100L);
-        loveAccount.deposit(100L);
         Transaction transferTransaction2 = transactionRepository
                 .save(newTransferTransaction(ssarAccount1, loveAccount));
-
-        cosAccount.withdraw(100L);
-        ssarAccount1.deposit(100L);
         Transaction transferTransaction3 = transactionRepository
                 .save(newTransferTransaction(cosAccount, ssarAccount1));
-
     }
 
     private void autoincrementReset() {

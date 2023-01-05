@@ -43,8 +43,8 @@ public class TransactionQueryRepository {
             query = query.setParameter("depositAccountId", accountId);
         }
 
-        query.setFirstResult(page * 3);
-        query.setMaxResults(3);
+        query.setFirstResult(page * 5);
+        query.setMaxResults(5);
         return query.getResultList();
     }
 }
