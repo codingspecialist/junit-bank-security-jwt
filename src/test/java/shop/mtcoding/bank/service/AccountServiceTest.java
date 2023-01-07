@@ -33,6 +33,7 @@ import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountTransferReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountWithdrawReqDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDepositRespDto;
+import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDetailRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountListRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountSaveRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountTransferRespDto;
@@ -247,6 +248,43 @@ public class AccountServiceTest extends DummyObject {
         assertThat(cosAccountStub1.getBalance()).isEqualTo(1100L);
         assertThat(accountTransferRespDto.getTransaction().getWithdrawAccountBalance()).isEqualTo(900L);
         assertThat(accountTransferRespDto.getTransaction().getDepositAccountBalance()).isEqualTo(1100L);
+    }
+
+    @Test
+    public void 계좌상세보기_test() throws Exception {
+        // given
+        Long accountNumber = 1111L;
+        Long userId = 1L;
+
+        // stub1
+        User ssar = newMockUser(1L, "ssar", "쌀");
+        User cos = newMockUser(2L, "cos", "코스,");
+        User love = newMockUser(3L, "love", "러브");
+        Account ssarAccount = newMockAccount(1L, 1111L, 1000L, ssar);
+        Account cosAccount = newMockAccount(2L, 2222L, 1000L, cos);
+        Account loveAccount = newMockAccount(3L, 3333L, 1000L, love);
+        Transaction withdrawTransaction1 = newMockWithdrawTransaction(1L, ssarAccount);
+        Transaction depositTransaction1 = newMockDepositTransaction(2L, ssarAccount);
+        Transaction transferTransaction1 = newMockTransferTransaction(3L, ssarAccount, cosAccount);
+        Transaction transferTransaction2 = newMockTransferTransaction(4L, ssarAccount, loveAccount);
+        Transaction transferTransaction3 = newMockTransferTransaction(5L, cosAccount, ssarAccount);
+        List<Transaction> transactions = Arrays.asList(withdrawTransaction1, depositTransaction1,
+                transferTransaction1,
+                transferTransaction2, transferTransaction3);
+        when(accountRepository.findByNumber(any())).thenReturn(Optional.of(ssarAccount));
+
+        // stub2
+
+        when(transactionRepository.findTransactionList(any(), any(), any())).thenReturn(transactions);
+
+        // when
+        AccountDetailRespDto accountDetailRespDto = accountService.계좌상세보기(accountNumber, userId);
+        String responseBody = om.writeValueAsString(accountDetailRespDto);
+        log.debug("디버그 : " + responseBody);
+
+        // then
+        assertThat(accountDetailRespDto.getTransactions().size()).isEqualTo(5);
+        assertThat(accountDetailRespDto.getBalance()).isEqualTo(900);
     }
 
 }

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import lombok.Getter;
 import lombok.Setter;
+import shop.mtcoding.bank.domain.account.Account;
 import shop.mtcoding.bank.domain.transaction.Transaction;
 import shop.mtcoding.bank.util.CustomDateUtil;
 
@@ -15,9 +16,10 @@ public class TransactionRespDto {
     public static class TransactionListRespDto {
         private List<TransactionDto> transactions = new ArrayList<>();
 
-        public TransactionListRespDto(List<Transaction> transactions, Long accountNumber) {
+        public TransactionListRespDto(Account account, List<Transaction> transactions) {
             this.transactions = transactions.stream()
-                    .map((transaction) -> new TransactionDto(transaction, accountNumber)).collect(Collectors.toList());
+                    .map((transaction) -> new TransactionDto(transaction, account.getNumber()))
+                    .collect(Collectors.toList());
         }
 
         @Getter
@@ -36,7 +38,6 @@ public class TransactionRespDto {
             private Long balance;
 
             public TransactionDto(Transaction transaction, Long accountNumber) {
-                System.out.println("디버그 : accountNumber : " + accountNumber);
                 this.id = transaction.getId();
                 this.gubun = transaction.getGubun().getValue();
                 this.amount = transaction.getAmount();

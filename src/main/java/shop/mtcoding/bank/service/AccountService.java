@@ -20,6 +20,7 @@ import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountTransferReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountWithdrawReqDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDepositRespDto;
+import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDetailRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountListRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountSaveRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountTransferRespDto;
@@ -192,5 +193,21 @@ public class AccountService {
     }
 
     // 계좌상세보기
+    public AccountDetailRespDto 계좌상세보기(Long accountNumber, Long userId) {
+        // 1. 구분값, 페이지 고정
+        String gubun = "ALL";
+        Integer page = 0;
+
+        // 2. 계좌 확인
+        Account accountPS = accountRepository.findByNumber(accountNumber).orElseThrow(
+                () -> new CustomApiException("계좌를 찾을 수 없습니다"));
+
+        // 3. 계좌 소유자 확인
+        accountPS.checkOwner(userId);
+
+        // 4. 입출금목록보기
+        List<Transaction> transactionList = transactionRepository.findTransactionList(accountPS.getId(), gubun, page);
+        return new AccountDetailRespDto(accountPS, transactionList);
+    }
 
 }

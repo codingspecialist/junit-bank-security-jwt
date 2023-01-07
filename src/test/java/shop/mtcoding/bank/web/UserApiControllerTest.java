@@ -44,9 +44,7 @@ public class UserApiControllerTest extends DummyObject {
 
     @BeforeEach
     public void setUp() {
-        User ssar = userRepository.save(newUser("ssar", "쌀"));
-        User cos = userRepository.save(newUser("cos", "코스"));
-        User admin = userRepository.save(newUser("admin", "관리자"));
+        dataSetting();
     }
 
     @Test
@@ -114,5 +112,11 @@ public class UserApiControllerTest extends DummyObject {
 
         // then
         resultActions.andExpect(status().isOk());
+    }
+
+    private void dataSetting() {
+        User ssar = userRepository.save(newUser("ssar", "쌀"));
+        User cos = userRepository.save(newUser("cos", "코스"));
+        User admin = userRepository.save(newUser("admin", "관리자"));
     }
 }

@@ -22,6 +22,7 @@ import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountTransferReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountWithdrawReqDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDepositRespDto;
+import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDetailRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountListRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountSaveRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountTransferRespDto;
@@ -82,5 +83,12 @@ public class AccountApiController {
         AccountTransferRespDto accountTransferRespDto = accountService.계좌이체(accountTransferReqDto,
                 loginUser.getUser().getId());
         return new ResponseEntity<>(new ResponseDto<>(1, "계좌 이체 완료", accountTransferRespDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/s/account/{accountNumber}")
+    public ResponseEntity<?> findDetailAccount(@PathVariable Long accountNumber,
+            @AuthenticationPrincipal LoginUser loginUser) {
+        AccountDetailRespDto accountDetailRespDto = accountService.계좌상세보기(accountNumber, loginUser.getUser().getId());
+        return new ResponseEntity<>(new ResponseDto<>(1, "계좌상세보기 성공", accountDetailRespDto), HttpStatus.OK);
     }
 }

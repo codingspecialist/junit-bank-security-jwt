@@ -33,61 +33,66 @@ import shop.mtcoding.bank.domain.user.UserRepository;
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 public class TransactionApiControllerTest extends DummyObject {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-    private static final String APPLICATION_JSON_UTF8 = "application/json; charset=utf-8";
+        private final Logger log = LoggerFactory.getLogger(getClass());
+        private static final String APPLICATION_JSON_UTF8 = "application/json; charset=utf-8";
 
-    @Autowired
-    private MockMvc mvc;
-    @Autowired
-    private ObjectMapper om;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
-    private TransactionRepository transactionRepository;
+        @Autowired
+        private MockMvc mvc;
+        @Autowired
+        private ObjectMapper om;
+        @Autowired
+        private UserRepository userRepository;
+        @Autowired
+        private AccountRepository accountRepository;
+        @Autowired
+        private TransactionRepository transactionRepository;
 
-    @BeforeEach
-    public void setUp() {
-        User ssar = userRepository.save(newUser("ssar", "쌀"));
-        User cos = userRepository.save(newUser("cos", "코스,"));
-        User love = userRepository.save(newUser("love", "러브"));
-        User admin = userRepository.save(newUser("admin", "관리자"));
-        Account ssarAccount1 = accountRepository.save(newAccount(1111L, ssar));
-        Account cosAccount = accountRepository.save(newAccount(2222L, cos));
-        Account loveAccount = accountRepository.save(newAccount(3333L, love));
-        Account ssarAccount2 = accountRepository.save(newAccount(4444L, ssar));
-        Transaction withdrawTransaction1 = transactionRepository
-                .save(newWithdrawTransaction(ssarAccount1));
-        Transaction depositTransaction1 = transactionRepository
-                .save(newDepositTransaction(cosAccount));
-        Transaction transferTransaction1 = transactionRepository
-                .save(newTransferTransaction(ssarAccount1, cosAccount));
-        Transaction transferTransaction2 = transactionRepository
-                .save(newTransferTransaction(ssarAccount1, loveAccount));
-        Transaction transferTransaction3 = transactionRepository
-                .save(newTransferTransaction(cosAccount, ssarAccount1));
-    }
+        @BeforeEach
+        public void setUp() {
+                dataSetting();
+        }
 
-    // 계좌 비밀번호 BCrypt 인코딩 (숙제)
-    @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    @Test
-    public void findTransactionList_test() throws Exception {
-        // given
-        Long accountNumber = 1111L;
-        String gubun = "ALL"; // DEPOSIT, WITHDRAW
-        String page = "0";
+        // 계좌 비밀번호 BCrypt 인코딩 (숙제)
+        @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+        @Test
+        public void findTransactionList_test() throws Exception {
+                // given
+                Long accountNumber = 1111L;
+                String gubun = "ALL"; // DEPOSIT, WITHDRAW
+                String page = "0";
 
-        // when
-        ResultActions resultActions = mvc
-                .perform(get("/api/s/account/" + accountNumber + "/transaction").param("gubun", gubun).param("page",
-                        page));
-        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        log.debug("디버그 : " + responseBody);
+                // when
+                ResultActions resultActions = mvc
+                                .perform(get("/api/s/account/" + accountNumber + "/transaction").param("gubun", gubun)
+                                                .param("page",
+                                                                page));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.debug("디버그 : " + responseBody);
 
-        // then
-        resultActions.andExpect(status().isOk());
+                // then
+                resultActions.andExpect(status().isOk());
 
-    }
+        }
+
+        private void dataSetting() {
+                User ssar = userRepository.save(newUser("ssar", "쌀"));
+                User cos = userRepository.save(newUser("cos", "코스,"));
+                User love = userRepository.save(newUser("love", "러브"));
+                User admin = userRepository.save(newUser("admin", "관리자"));
+                Account ssarAccount1 = accountRepository.save(newAccount(1111L, ssar));
+                Account cosAccount = accountRepository.save(newAccount(2222L, cos));
+                Account loveAccount = accountRepository.save(newAccount(3333L, love));
+                Account ssarAccount2 = accountRepository.save(newAccount(4444L, ssar));
+                Transaction withdrawTransaction1 = transactionRepository
+                                .save(newWithdrawTransaction(ssarAccount1, accountRepository));
+                Transaction depositTransaction1 = transactionRepository
+                                .save(newDepositTransaction(cosAccount, accountRepository));
+                Transaction transferTransaction1 = transactionRepository
+                                .save(newTransferTransaction(ssarAccount1, cosAccount, accountRepository));
+                Transaction transferTransaction2 = transactionRepository
+                                .save(newTransferTransaction(ssarAccount1, loveAccount, accountRepository));
+                Transaction transferTransaction3 = transactionRepository
+                                .save(newTransferTransaction(cosAccount, ssarAccount1, accountRepository));
+        }
 
 }

@@ -2,6 +2,7 @@ package shop.mtcoding.bank.domain.transaction;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;

@@ -15,8 +15,7 @@ https://docs.spring.io/spring-security/reference/servlet/authorization/authorize
 - CustomForbiddenException 생성 (완)
 - 계좌입금, 출금, 이체 (컨트롤러 테스트) (완)
 - 계좌입금, 출금, 이체 (서비스 테스트) (완)
-- Account 목록보기
-- 권한체크 (컨트롤러)
+- Account 목록보기 (완)
 
 
 ## 화면설계
@@ -31,17 +30,17 @@ https://docs.spring.io/spring-security/reference/servlet/authorization/authorize
 > https://coding-factory.tistory.com/529
 
 ## 기능정리
-- 회원가입
-- 회원패스워드변경
-- 로그인
-- 계좌등록
-- 계좌삭제
-- 본인계좌목록보기 
+- 회원가입 (완)
+- 회원패스워드변경 (완)
+- 로그인 (완)
+- 계좌등록 (완)
+- 계좌삭제 (완)
+- 본인계좌목록보기 (완)
 > (User select, Account select)
-- 입금하기
-- 출금하기
-- 이체하기
-- 입출금목록보기 동적쿼리
+- 입금하기 (완)
+- 출금하기 (완)
+- 이체하기 (완)
+- 입출금목록보기 동적쿼리 (완)
 > (Transaction select, or query, withdrawAccount left join fetch,  depositAccount left join fetch)
 - 본인계좌상세보기 
 > (Account select, user join fetch, (입출금목록보기))   

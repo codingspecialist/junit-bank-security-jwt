@@ -1,5 +1,6 @@
 package shop.mtcoding.bank.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -22,7 +23,6 @@ import shop.mtcoding.bank.config.dummy.DummyObject;
 import shop.mtcoding.bank.domain.account.Account;
 import shop.mtcoding.bank.domain.account.AccountRepository;
 import shop.mtcoding.bank.domain.transaction.Transaction;
-import shop.mtcoding.bank.domain.transaction.TransactionQueryRepository;
 import shop.mtcoding.bank.domain.transaction.TransactionRepository;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
@@ -47,9 +47,6 @@ public class TransactionServiceTest extends DummyObject {
 
         @Mock
         private TransactionRepository transactionRepository;
-
-        @Mock
-        private TransactionQueryRepository transactionQueryRepository;
 
         @Spy
         private ObjectMapper om;
@@ -80,7 +77,7 @@ public class TransactionServiceTest extends DummyObject {
                                 transferTransaction2, transferTransaction3);
 
                 when(accountRepository.findByNumber(any())).thenReturn((Optional.of(ssarAccount)));
-                when(transactionQueryRepository.findByAccountId(any(), any(), any())).thenReturn(transactions);
+                when(transactionRepository.findTransactionList(any(), any(), any())).thenReturn(transactions);
 
                 // when
                 TransactionListRespDto transactionListRespDto = transactionService.입출금목록보기(userId, accountNumber, gubun,
@@ -89,8 +86,7 @@ public class TransactionServiceTest extends DummyObject {
                 log.debug("디버그 : " + body);
 
                 // then
-                // assertThat(transactionListRespDto.getTransactions().size()).isEqualTo(2);
-                // assertThat(transactionListRespDto.getTransactions().get(0).getBalance()).isEqualTo(800L);
+                assertThat(transactionListRespDto.getTransactions().get(0).getBalance()).isEqualTo(900L);
         }
 
 }

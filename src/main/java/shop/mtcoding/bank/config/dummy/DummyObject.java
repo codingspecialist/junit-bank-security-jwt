@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import shop.mtcoding.bank.domain.account.Account;
+import shop.mtcoding.bank.domain.account.AccountRepository;
 import shop.mtcoding.bank.domain.transaction.Transaction;
 import shop.mtcoding.bank.domain.transaction.TransactionEnum;
 import shop.mtcoding.bank.domain.user.User;
@@ -117,8 +118,11 @@ public class DummyObject {
         return transaction;
     }
 
-    protected Transaction newDepositTransaction(Account account) {
+    protected Transaction newDepositTransaction(Account account, AccountRepository accountRepository) {
         account.deposit(100L);
+        if (accountRepository != null) {
+            accountRepository.save(account);
+        }
         Transaction transaction = Transaction.builder()
                 .withdrawAccount(null)
                 .depositAccount(account)
@@ -133,8 +137,11 @@ public class DummyObject {
         return transaction;
     }
 
-    protected Transaction newWithdrawTransaction(Account account) {
+    protected Transaction newWithdrawTransaction(Account account, AccountRepository accountRepository) {
         account.withdraw(100L);
+        if (accountRepository != null) {
+            accountRepository.save(account);
+        }
         Transaction transaction = Transaction.builder()
                 .withdrawAccount(account)
                 .depositAccount(null)
@@ -148,9 +155,15 @@ public class DummyObject {
         return transaction;
     }
 
-    protected Transaction newTransferTransaction(Account withdrawAccount, Account depositAccount) {
+    protected Transaction newTransferTransaction(Account withdrawAccount, Account depositAccount,
+            AccountRepository accountRepository) {
         withdrawAccount.withdraw(100L);
         depositAccount.deposit(100L);
+        if (accountRepository != null) {
+            accountRepository.save(withdrawAccount);
+            accountRepository.save(depositAccount);
+        }
+
         Transaction transaction = Transaction.builder()
                 .withdrawAccount(withdrawAccount)
                 .depositAccount(depositAccount)

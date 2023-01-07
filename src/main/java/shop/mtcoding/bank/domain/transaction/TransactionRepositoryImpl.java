@@ -5,16 +5,20 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.query.Param;
 
 import lombok.RequiredArgsConstructor;
 
+interface Dao {
+    List<Transaction> findTransactionList(@Param("accountId") Long accountId, @Param("gubun") String gubun,
+            @Param("page") Integer page);
+}
+
 @RequiredArgsConstructor
-@Repository
-public class TransactionQueryRepository {
+public class TransactionRepositoryImpl implements Dao {
     private final EntityManager em;
 
-    public List<Transaction> findByAccountId(Long accountId, String gubun, Integer page) {
+    public List<Transaction> findTransactionList(Long accountId, String gubun, Integer page) {
         String sql = "";
         sql += "select t from Transaction t ";
 
