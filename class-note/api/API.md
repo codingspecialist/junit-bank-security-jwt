@@ -31,7 +31,7 @@
 
 - header 
 ```txt
-[Authorization : Bearar 토큰]
+Authorization : Bearar 토큰
 ```
 - body
 ```json
@@ -46,7 +46,7 @@
 - http://localhost:8080/api/s/account
 - header 
 ```txt
-[Authorization : Bearar 토큰]
+Authorization : Bearar 토큰
 ```
 - body
 ```json
@@ -61,7 +61,7 @@
 - http://localhost:8080/api/s/account/login-user
 - header 
 ```txt
-[Authorization : Bearar 토큰]
+Authorization : Bearar 토큰
 ```
 ![img](./list-account.png)
 
@@ -69,7 +69,7 @@
 - http://localhost:8080/api/s/account/{accountNumber}
 - header 
 ```txt
-[Authorization : Bearar 토큰]
+Authorization : Bearar 토큰
 ```
 ![img](./delete-account.png)
 
@@ -77,7 +77,7 @@
 - http://localhost:8080/api/account/deposit
 - header 
 ```txt
-[Authorization : Bearar 토큰]
+Authorization : Bearar 토큰
 ```
 - body
 ```json
@@ -94,7 +94,7 @@
 - http://localhost:8080/api/s/account/withdraw
 - header 
 ```txt
-[Authorization : Bearar 토큰]
+Authorization : Bearar 토큰
 ```
 - body
 ```json
@@ -111,7 +111,7 @@
 - http://localhost:8080/api/s/account/transfer
 - header 
 ```txt
-[Authorization : Bearar 토큰]
+Authorization : Bearar 토큰
 ```
 - body
 ```json
@@ -129,7 +129,7 @@
 - http://localhost:8080/api/s/account/{accountNumber}
 - header 
 ```txt
-[Authorization : Bearar 토큰]
+Authorization : Bearar 토큰
 ```
 ![img](./detail-account.png)
 
@@ -137,9 +137,11 @@
 - http://localhost:8080/api/s/account/1111/transaction?gubun=ALL&page=0
 - header 
 ```txt
-[Authorization : Bearar 토큰]
+Authorization : Bearar 토큰
 ```
 - param 
-[gubun=ALL or DEPOSIT or WITHDRAW] null 허용
-[page=정수] null 허용
+```txt
+gubun=ALL or DEPOSIT or WITHDRAW -> null 허용
+page=정수 -> null 허용
+```
 ![img](./list-transaction.png)
