@@ -1,5 +1,11 @@
 # 입출금이체 프로그램
 
+### 준비 github 자료
+- https://github.com/codingspecialist/JUNIT5-Security-Lecture
+- https://github.com/codingspecialist/junit-bank-security-jwt
+
+### 진행된 테스트
+
 - UserRepository findByUsername() 테스트 - 통과
 - UserService 회원가입 테스트 - 통과
 - UserApiController 회원가입 테스트 - 통과
@@ -16,6 +22,7 @@ https://docs.spring.io/spring-security/reference/servlet/authorization/authorize
 - 계좌입금, 출금, 이체 (컨트롤러 테스트) (완)
 - 계좌입금, 출금, 이체 (서비스 테스트) (완)
 - Account 목록보기 (완)
+- Transaction 목록보기 (완)
 
 
 ## 화면설계
