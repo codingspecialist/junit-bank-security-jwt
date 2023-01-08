@@ -19,15 +19,14 @@ https://docs.spring.io/spring-security/reference/servlet/authorization/authorize
 
 
 ## 화면설계
-[ux-design](ux-design.pdf)
+[ux-design](./class-note/ux-design.pdf)
 
 ## 테이블설계
-[table-design](table-design.pdf)
+[table-design](./class-note/table-design.pdf)
 
 ## 유효성검사
-> [regex](regex.pdf)
-> [validation](validation.png)
-> https://coding-factory.tistory.com/529
+> [regex](./class-note/regex/regex.pdf)
+> [validation](./class-note/regex/validation.png)
 
 ## 기능정리
 - 회원가입 (완)
@@ -42,9 +41,9 @@ https://docs.spring.io/spring-security/reference/servlet/authorization/authorize
 - 이체하기 (완)
 - 입출금목록보기 동적쿼리 (완)
 > (Transaction select, or query, withdrawAccount left join fetch,  depositAccount left join fetch)
-- 본인계좌상세보기 
+- 본인계좌상세보기 (완)
 > (Account select, user join fetch, (입출금목록보기))   
-- vs
+- vs (보너스 강의 - 새로운 브랜치에서 양방향 매핑 테스트하기) (미완)
 > (Account select, user join fetch, (양방향매핑 + 컬렉션 concat/sort + batchsize 100 in query))
 
 ## 기술스택
@@ -87,6 +86,7 @@ create table account (
     updated_at timestamp not null,
     primary key (id)
 );
+create index idx_account_number on account_tb (number);
 
 create table transaction (
     id bigint auto_increment,
