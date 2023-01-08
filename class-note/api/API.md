@@ -30,7 +30,9 @@
 - http://localhost:8080/api/s/user/login-user/password
 
 - header 
+```txt
 [Authorization : Bearar 토큰]
+```
 - body
 ```json
 {
@@ -43,7 +45,9 @@
 ### 계좌등록 : POST
 - http://localhost:8080/api/s/account
 - header 
+```txt
 [Authorization : Bearar 토큰]
+```
 - body
 ```json
 {
@@ -56,19 +60,25 @@
 ### 계좌목록 : GET
 - http://localhost:8080/api/s/account/login-user
 - header 
+```txt
 [Authorization : Bearar 토큰]
+```
 ![img](./list-account.png)
 
 ### 계좌삭제 : DELETE
 - http://localhost:8080/api/s/account/{accountNumber}
 - header 
+```txt
 [Authorization : Bearar 토큰]
+```
 ![img](./delete-account.png)
 
 ### 계좌입금 : POST
 - http://localhost:8080/api/account/deposit
 - header 
+```txt
 [Authorization : Bearar 토큰]
+```
 - body
 ```json
 {
@@ -83,7 +93,9 @@
 ### 계좌출금 : POST
 - http://localhost:8080/api/s/account/withdraw
 - header 
+```txt
 [Authorization : Bearar 토큰]
+```
 - body
 ```json
 {
@@ -98,7 +110,9 @@
 ### 계좌이체 : POST
 - http://localhost:8080/api/s/account/transfer
 - header 
+```txt
 [Authorization : Bearar 토큰]
+```
 - body
 ```json
 {
@@ -114,13 +128,17 @@
 ### 계좌상세 : GET
 - http://localhost:8080/api/s/account/{accountNumber}
 - header 
+```txt
 [Authorization : Bearar 토큰]
+```
 ![img](./detail-account.png)
 
 ### 거래내역 : GET
 - http://localhost:8080/api/s/account/1111/transaction?gubun=ALL&page=0
 - header 
+```txt
 [Authorization : Bearar 토큰]
+```
 - param 
 [gubun=ALL or DEPOSIT or WITHDRAW] null 허용
 [page=정수] null 허용
