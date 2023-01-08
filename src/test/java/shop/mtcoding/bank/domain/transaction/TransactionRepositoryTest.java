@@ -39,23 +39,23 @@ public class TransactionRepositoryTest extends DummyObject {
         }
 
         @Test
-        public void findByAccountNumber_deposit_test() throws Exception {
+        public void findTransactionList_deposit_test() throws Exception {
                 // given
                 Long userId = 1L;
 
                 // when
                 List<Transaction> transactionListPS = transactionRepository.findTransactionList(userId, "DEPOSIT", 0);
                 log.debug("디버그 : size : " + transactionListPS.size());
-                log.debug("디버그 : " + transactionListPS.get(0).getSender());
-                log.debug("디버그 : " + transactionListPS.get(0).getReciver());
-                log.debug("디버그 : " + transactionListPS.get(0).getDepositAccountBalance());
+                log.debug("디버그 : " + transactionListPS.get(1).getSender());
+                log.debug("디버그 : " + transactionListPS.get(1).getReciver());
+                log.debug("디버그 : " + transactionListPS.get(1).getDepositAccountBalance());
 
                 // then
-                assertThat(transactionListPS.get(0).getDepositAccountBalance()).isEqualTo(800L);
+                assertThat(transactionListPS.get(1).getDepositAccountBalance()).isEqualTo(900L);
         }
 
         @Test
-        public void findByAccountId_withdraw_test() throws Exception {
+        public void findTransactionList_withdraw_test() throws Exception {
                 // given
                 Long userId = 1L;
 
@@ -67,24 +67,24 @@ public class TransactionRepositoryTest extends DummyObject {
                 log.debug("디버그 : " + transactionListPS.get(2).getWithdrawAccountBalance());
 
                 // then
-                assertThat(transactionListPS.get(2).getWithdrawAccountBalance()).isEqualTo(700L);
+                assertThat(transactionListPS.get(2).getWithdrawAccountBalance()).isEqualTo(800L);
         }
 
         @Test
-        public void findByAccountId_all_test() throws Exception {
+        public void findTransactionList_all_test() throws Exception {
                 // given
                 Long userId = 1L;
 
                 // when
                 List<Transaction> transactionListPS = transactionRepository.findTransactionList(userId, "ALL", 0);
                 log.debug("디버그 : size : " + transactionListPS.size());
-                log.debug("디버그 : " + transactionListPS.get(3).getSender());
-                log.debug("디버그 : " + transactionListPS.get(3).getReciver());
-                log.debug("디버그 : " + transactionListPS.get(3).getWithdrawAccountBalance());
-                log.debug("디버그 : " + transactionListPS.get(3).getDepositAccountBalance());
+                log.debug("디버그 : " + transactionListPS.get(4).getSender());
+                log.debug("디버그 : " + transactionListPS.get(4).getReciver());
+                log.debug("디버그 : " + transactionListPS.get(4).getWithdrawAccountBalance());
+                log.debug("디버그 : " + transactionListPS.get(4).getDepositAccountBalance());
 
                 // then
-                assertThat(transactionListPS.get(3).getDepositAccountBalance()).isEqualTo(800L);
+                assertThat(transactionListPS.get(4).getDepositAccountBalance()).isEqualTo(900L);
         }
 
         private void dataSetting() {
@@ -99,7 +99,7 @@ public class TransactionRepositoryTest extends DummyObject {
                 Transaction withdrawTransaction1 = transactionRepository
                                 .save(newWithdrawTransaction(ssarAccount1, accountRepository));
                 Transaction depositTransaction1 = transactionRepository
-                                .save(newDepositTransaction(cosAccount, accountRepository));
+                                .save(newDepositTransaction(ssarAccount1, accountRepository));
                 Transaction transferTransaction1 = transactionRepository
                                 .save(newTransferTransaction(ssarAccount1, cosAccount, accountRepository));
                 Transaction transferTransaction2 = transactionRepository

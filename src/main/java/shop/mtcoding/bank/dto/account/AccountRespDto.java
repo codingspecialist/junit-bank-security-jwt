@@ -126,7 +126,6 @@ public class AccountRespDto {
             private String sender; // 출금 계좌번호
             private String reciver; // ATM
             private Long amount;
-            private Long withdrawAccountBalance;
             private String createdAt;
 
             public TransactionDto(Transaction transaction) {
@@ -135,7 +134,6 @@ public class AccountRespDto {
                 this.sender = transaction.getSender();
                 this.reciver = transaction.getReciver();
                 this.amount = transaction.getAmount();
-                this.withdrawAccountBalance = transaction.getWithdrawAccountBalance();
                 this.createdAt = CustomDateUtil.toStringFormat(transaction.getCreatedAt());
             }
         }
@@ -164,7 +162,6 @@ public class AccountRespDto {
             private String sender; // 출금 계좌번호
             private String reciver; // ATM
             private Long amount;
-            private Long withdrawAccountBalance;
             @JsonIgnore
             private Long depositAccountBalance;
             private String createdAt;
@@ -175,7 +172,6 @@ public class AccountRespDto {
                 this.sender = transaction.getSender();
                 this.reciver = transaction.getReciver();
                 this.amount = transaction.getAmount();
-                this.withdrawAccountBalance = transaction.getWithdrawAccountBalance();
                 this.depositAccountBalance = transaction.getDepositAccountBalance();
                 this.createdAt = CustomDateUtil.toStringFormat(transaction.getCreatedAt());
             }

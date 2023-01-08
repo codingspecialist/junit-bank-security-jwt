@@ -24,7 +24,7 @@ public class TransactionApiController {
     @GetMapping("/s/account/{accountNumber}/transaction")
     public ResponseEntity<?> findTransactionList(
             @PathVariable Long accountNumber,
-            String gubun,
+            @RequestParam(value = "gubun", defaultValue = "ALL") String gubun,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @AuthenticationPrincipal LoginUser loginUser) {
         TransactionListRespDto transactionListRespDto = transactionService.입출금목록보기(loginUser.getUser().getId(),

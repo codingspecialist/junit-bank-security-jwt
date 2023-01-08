@@ -75,6 +75,10 @@ public class AccountServiceTest extends DummyObject {
         when(userRepository.findById(ssar.getId())).thenReturn(Optional.of(ssar));
 
         // stub 2
+        // Account isUseAccount = newMockAccount(1L, 1111L, 1000L, ssar);
+        when(accountRepository.findByNumber(1111L)).thenReturn(Optional.empty());
+
+        // stub 3
         Account ssarAccount = newMockAccount(1L, 1111L, 1000L, ssar);
         when(accountRepository.save(any())).thenReturn(ssarAccount);
 
@@ -207,7 +211,6 @@ public class AccountServiceTest extends DummyObject {
 
         // then
         assertThat(ssarAccountStub1.getBalance()).isEqualTo(900L);
-        assertThat(accountWithdrawRespDto.getTransaction().getWithdrawAccountBalance()).isEqualTo(900L);
     }
 
     @Test
@@ -246,7 +249,7 @@ public class AccountServiceTest extends DummyObject {
         // then
         assertThat(ssarAccountStub1.getBalance()).isEqualTo(900L);
         assertThat(cosAccountStub1.getBalance()).isEqualTo(1100L);
-        assertThat(accountTransferRespDto.getTransaction().getWithdrawAccountBalance()).isEqualTo(900L);
+        assertThat(accountTransferRespDto.getBalance()).isEqualTo(900L);
         assertThat(accountTransferRespDto.getTransaction().getDepositAccountBalance()).isEqualTo(1100L);
     }
 

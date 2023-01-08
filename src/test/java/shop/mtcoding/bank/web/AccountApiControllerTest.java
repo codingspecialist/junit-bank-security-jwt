@@ -39,184 +39,188 @@ import shop.mtcoding.bank.dto.account.AccountReqDto.AccountWithdrawReqDto;
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 public class AccountApiControllerTest extends DummyObject {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-    private static final String APPLICATION_JSON_UTF8 = "application/json; charset=utf-8";
+        private final Logger log = LoggerFactory.getLogger(getClass());
+        private static final String APPLICATION_JSON_UTF8 = "application/json; charset=utf-8";
 
-    @Autowired
-    private MockMvc mvc;
-    @Autowired
-    private ObjectMapper om;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
-    private TransactionRepository transactionRepository;
+        @Autowired
+        private MockMvc mvc;
+        @Autowired
+        private ObjectMapper om;
+        @Autowired
+        private UserRepository userRepository;
+        @Autowired
+        private AccountRepository accountRepository;
+        @Autowired
+        private TransactionRepository transactionRepository;
 
-    @BeforeEach
-    public void setUp() {
-        dataSetting();
-    }
+        @BeforeEach
+        public void setUp() {
+                dataSetting();
+        }
 
-    // 계좌 비밀번호 BCrypt 인코딩 (숙제)
-    @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    @Test
-    public void saveAccount_test() throws Exception {
-        // given
-        AccountSaveReqDto accountSaveReqDto = new AccountSaveReqDto();
-        accountSaveReqDto.setNumber(9999L);
-        accountSaveReqDto.setPassword(1234L);
+        // 계좌 비밀번호 BCrypt 인코딩 (숙제)
+        @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+        @Test
+        public void saveAccount_test() throws Exception {
+                // given
+                AccountSaveReqDto accountSaveReqDto = new AccountSaveReqDto();
+                accountSaveReqDto.setNumber(9999L);
+                accountSaveReqDto.setPassword(1234L);
 
-        String requestBody = om.writeValueAsString(accountSaveReqDto);
-        log.debug("디버그 : " + requestBody);
+                String requestBody = om.writeValueAsString(accountSaveReqDto);
+                log.debug("디버그 : " + requestBody);
 
-        // when
-        ResultActions resultActions = mvc
-                .perform(post("/api/s/account").content(requestBody).contentType(APPLICATION_JSON_UTF8));
-        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        log.debug("디버그 : " + responseBody);
+                // when
+                ResultActions resultActions = mvc
+                                .perform(post("/api/s/account").content(requestBody)
+                                                .contentType(APPLICATION_JSON_UTF8));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.debug("디버그 : " + responseBody);
 
-        // then
-        resultActions.andExpect(status().isCreated());
+                // then
+                resultActions.andExpect(status().isCreated());
 
-    }
+        }
 
-    @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    @Test
-    public void findUserAccount_test() throws Exception {
-        // given
+        @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+        @Test
+        public void findUserAccount_test() throws Exception {
+                // given
 
-        // when
-        ResultActions resultActions = mvc
-                .perform(get("/api/s/account/login-user"));
-        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        log.debug("디버그 : " + responseBody);
+                // when
+                ResultActions resultActions = mvc
+                                .perform(get("/api/s/account/login-user"));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.debug("디버그 : " + responseBody);
 
-        // then
-        resultActions.andExpect(status().isOk());
-    }
+                // then
+                resultActions.andExpect(status().isOk());
+        }
 
-    @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    @Test
-    public void deleteAccount_test() throws Exception {
-        // given
-        Long accountNumber = 1111L;
+        @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+        @Test
+        public void deleteAccount_test() throws Exception {
+                // given
+                Long accountNumber = 1111L;
 
-        // when
-        ResultActions resultActions = mvc
-                .perform(delete("/api/s/account/" + accountNumber));
-        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        log.debug("디버그 : " + responseBody);
+                // when
+                ResultActions resultActions = mvc
+                                .perform(delete("/api/s/account/" + accountNumber));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.debug("디버그 : " + responseBody);
 
-        // then
-        resultActions.andExpect(status().isOk());
+                // then
+                resultActions.andExpect(status().isOk());
 
-    }
+        }
 
-    @Test
-    public void depositAccount_test() throws Exception {
-        // given
-        AccountDepositReqDto accountDepositReqDto = new AccountDepositReqDto();
-        accountDepositReqDto.setNumber(1111L);
-        accountDepositReqDto.setAmount(100L);
-        accountDepositReqDto.setGubun("DEPOSIT");
-        accountDepositReqDto.setTel("010-2222-6666");
+        @Test
+        public void depositAccount_test() throws Exception {
+                // given
+                AccountDepositReqDto accountDepositReqDto = new AccountDepositReqDto();
+                accountDepositReqDto.setNumber(1111L);
+                accountDepositReqDto.setAmount(100L);
+                accountDepositReqDto.setGubun("DEPOSIT");
+                accountDepositReqDto.setTel("01022226666");
 
-        String requestBody = om.writeValueAsString(accountDepositReqDto);
-        log.debug("디버그 : " + requestBody);
+                String requestBody = om.writeValueAsString(accountDepositReqDto);
+                log.debug("디버그 : " + requestBody);
 
-        // when
-        ResultActions resultActions = mvc
-                .perform(post("/api/account/deposit").content(requestBody).contentType(APPLICATION_JSON_UTF8));
-        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        log.debug("디버그 : " + responseBody);
+                // when
+                ResultActions resultActions = mvc
+                                .perform(post("/api/account/deposit").content(requestBody)
+                                                .contentType(APPLICATION_JSON_UTF8));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.debug("디버그 : " + responseBody);
 
-        // then
-        resultActions.andExpect(status().isCreated());
-    }
+                // then
+                resultActions.andExpect(status().isCreated());
+        }
 
-    @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    @Test
-    public void withdrawAccount_test() throws Exception {
-        // given
-        AccountWithdrawReqDto accountWithdrawReqDto = new AccountWithdrawReqDto();
-        accountWithdrawReqDto.setNumber(1111L);
-        accountWithdrawReqDto.setAmount(100L);
-        accountWithdrawReqDto.setPassword(1234L);
-        accountWithdrawReqDto.setGubun("WITHDRAW");
+        @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+        @Test
+        public void withdrawAccount_test() throws Exception {
+                // given
+                AccountWithdrawReqDto accountWithdrawReqDto = new AccountWithdrawReqDto();
+                accountWithdrawReqDto.setNumber(1111L);
+                accountWithdrawReqDto.setAmount(100L);
+                accountWithdrawReqDto.setPassword(1234L);
+                accountWithdrawReqDto.setGubun("WITHDRAW");
 
-        String requestBody = om.writeValueAsString(accountWithdrawReqDto);
-        log.debug("디버그 : " + requestBody);
+                String requestBody = om.writeValueAsString(accountWithdrawReqDto);
+                log.debug("디버그 : " + requestBody);
 
-        // when
-        ResultActions resultActions = mvc
-                .perform(post("/api/s/account/withdraw").content(requestBody).contentType(APPLICATION_JSON_UTF8));
-        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        log.debug("디버그 : " + responseBody);
+                // when
+                ResultActions resultActions = mvc
+                                .perform(post("/api/s/account/withdraw").content(requestBody)
+                                                .contentType(APPLICATION_JSON_UTF8));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.debug("디버그 : " + responseBody);
 
-        // then
-        resultActions.andExpect(status().isCreated());
-    }
+                // then
+                resultActions.andExpect(status().isCreated());
+        }
 
-    @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    @Test
-    public void transferAccount_test() throws Exception {
-        // given
-        AccountTransferReqDto transferReqDto = new AccountTransferReqDto();
-        transferReqDto.setWithdrawNumber(1111L);
-        transferReqDto.setDepositNumber(2222L);
-        transferReqDto.setAmount(100L);
-        transferReqDto.setWithdrawPassword(1234L);
-        transferReqDto.setGubun("TRANSFER");
+        @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+        @Test
+        public void transferAccount_test() throws Exception {
+                // given
+                AccountTransferReqDto transferReqDto = new AccountTransferReqDto();
+                transferReqDto.setWithdrawNumber(1111L);
+                transferReqDto.setDepositNumber(2222L);
+                transferReqDto.setAmount(100L);
+                transferReqDto.setWithdrawPassword(1234L);
+                transferReqDto.setGubun("TRANSFER");
 
-        String requestBody = om.writeValueAsString(transferReqDto);
-        log.debug("디버그 : " + requestBody);
+                String requestBody = om.writeValueAsString(transferReqDto);
+                log.debug("디버그 : " + requestBody);
 
-        // when
-        ResultActions resultActions = mvc
-                .perform(post("/api/s/account/transfer").content(requestBody).contentType(APPLICATION_JSON_UTF8));
-        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        log.debug("디버그 : " + responseBody);
+                // when
+                ResultActions resultActions = mvc
+                                .perform(post("/api/s/account/transfer").content(requestBody)
+                                                .contentType(APPLICATION_JSON_UTF8));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.debug("디버그 : " + responseBody);
 
-        // then
-        resultActions.andExpect(status().isCreated());
-    }
+                // then
+                resultActions.andExpect(status().isCreated());
+        }
 
-    @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    @Test
-    public void findDetailAccount_test() throws Exception {
+        @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+        @Test
+        public void findDetailAccount_test() throws Exception {
 
-        // given
-        Long accountNumber = 1111L;
+                // given
+                Long accountNumber = 1111L;
 
-        // when
-        ResultActions resultActions = mvc
-                .perform(get("/api/s/account/" + accountNumber));
-        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        log.debug("디버그 : " + responseBody);
+                // when
+                ResultActions resultActions = mvc
+                                .perform(get("/api/s/account/" + accountNumber));
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                log.debug("디버그 : " + responseBody);
 
-        // then
-        resultActions.andExpect(status().isOk());
-    }
+                // then
+                resultActions.andExpect(status().isOk());
+        }
 
-    private void dataSetting() {
-        User ssar = userRepository.save(newUser("ssar", "쌀"));
-        User cos = userRepository.save(newUser("cos", "코스,"));
-        User love = userRepository.save(newUser("love", "러브"));
-        User admin = userRepository.save(newUser("admin", "관리자"));
-        Account ssarAccount1 = accountRepository.save(newAccount(1111L, ssar));
-        Account cosAccount = accountRepository.save(newAccount(2222L, cos));
-        Account loveAccount = accountRepository.save(newAccount(3333L, love));
-        Account ssarAccount2 = accountRepository.save(newAccount(4444L, ssar));
-        Transaction withdrawTransaction1 = transactionRepository
-                .save(newWithdrawTransaction(ssarAccount1, accountRepository));
-        Transaction depositTransaction1 = transactionRepository
-                .save(newDepositTransaction(cosAccount, accountRepository));
-        Transaction transferTransaction1 = transactionRepository
-                .save(newTransferTransaction(ssarAccount1, cosAccount, accountRepository));
-        Transaction transferTransaction2 = transactionRepository
-                .save(newTransferTransaction(ssarAccount1, loveAccount, accountRepository));
-        Transaction transferTransaction3 = transactionRepository
-                .save(newTransferTransaction(cosAccount, ssarAccount1, accountRepository));
-    }
+        private void dataSetting() {
+                User ssar = userRepository.save(newUser("ssar", "쌀"));
+                User cos = userRepository.save(newUser("cos", "코스,"));
+                User love = userRepository.save(newUser("love", "러브"));
+                User admin = userRepository.save(newUser("admin", "관리자"));
+                Account ssarAccount1 = accountRepository.save(newAccount(1111L, ssar));
+                Account cosAccount = accountRepository.save(newAccount(2222L, cos));
+                Account loveAccount = accountRepository.save(newAccount(3333L, love));
+                Account ssarAccount2 = accountRepository.save(newAccount(4444L, ssar));
+                Transaction withdrawTransaction1 = transactionRepository
+                                .save(newWithdrawTransaction(ssarAccount1, accountRepository));
+                Transaction depositTransaction1 = transactionRepository
+                                .save(newDepositTransaction(ssarAccount1, accountRepository));
+                Transaction transferTransaction1 = transactionRepository
+                                .save(newTransferTransaction(ssarAccount1, cosAccount, accountRepository));
+                Transaction transferTransaction2 = transactionRepository
+                                .save(newTransferTransaction(ssarAccount1, loveAccount, accountRepository));
+                Transaction transferTransaction3 = transactionRepository
+                                .save(newTransferTransaction(cosAccount, ssarAccount1, accountRepository));
+        }
 }

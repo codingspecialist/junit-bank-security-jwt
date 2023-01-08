@@ -1,6 +1,7 @@
 package shop.mtcoding.bank.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,12 @@ public class AccountService {
     public AccountSaveRespDto 계좌등록(AccountSaveReqDto accountSaveReqDto, Long userId) {
         User userPS = userRepository.findById(userId).orElseThrow(
                 () -> new CustomApiException("유저를 찾을 수 없습니다"));
+
+        Optional<Account> isUseAccountOP = accountRepository.findByNumber(accountSaveReqDto.getNumber());
+        if (isUseAccountOP.isPresent()) {
+            throw new CustomApiException("해당 계좌가 이미 존재합니다");
+        }
+
         Account accountPS = accountRepository.save(accountSaveReqDto.toEntity(userPS));
         return new AccountSaveRespDto(accountPS);
     }

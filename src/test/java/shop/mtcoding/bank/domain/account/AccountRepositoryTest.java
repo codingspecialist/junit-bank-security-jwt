@@ -64,6 +64,6 @@ public class AccountRepositoryTest extends DummyObject {
     private void dataSetting() {
         User ssar = userRepository.save(newUser("ssar", "쌀"));
         Account ssarAccount1 = accountRepository.save(newAccount(1111L, ssar));
-        Account ssarAccount2 = accountRepository.save(newAccount(2222L, ssar));
+        Account ssarAccount2 = accountRepository.save(newAccount(4444L, ssar));
     }
 }

@@ -100,9 +100,9 @@ public class RegexTest {
 
     @Test
     public void account_tel_test() throws Exception {
-        String tel = "010-2222-7777";
+        String tel = "01022227777";
 
-        boolean result = Pattern.matches("^[0-9]{3}-[0-9]{4}-[0-9]{4}$", tel);
+        boolean result = Pattern.matches("^[0-9]{3}[0-9]{4}[0-9]{4}$", tel);
         log.debug("테스트 : " + result);
     }
 }

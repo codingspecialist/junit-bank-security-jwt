@@ -114,15 +114,15 @@ public void dataSetting() {
         Account loveAccount = accountRepository.save(newAccount(3333L, love));
         Account ssarAccount2 = accountRepository.save(newAccount(4444L, ssar));
         Transaction withdrawTransaction1 = transactionRepository
-                .save(newWithdrawTransaction(ssarAccount1));
+                .save(newWithdrawTransaction(ssarAccount1, accountRepository));
         Transaction depositTransaction1 = transactionRepository
-                .save(newDepositTransaction(cosAccount));
+                .save(newDepositTransaction(ssarAccount1, accountRepository));
         Transaction transferTransaction1 = transactionRepository
-                .save(newTransferTransaction(ssarAccount1, cosAccount));
+                .save(newTransferTransaction(ssarAccount1, cosAccount, accountRepository));
         Transaction transferTransaction2 = transactionRepository
-                .save(newTransferTransaction(ssarAccount1, loveAccount));
+                .save(newTransferTransaction(ssarAccount1, loveAccount, accountRepository));
         Transaction transferTransaction3 = transactionRepository
-                .save(newTransferTransaction(cosAccount, ssarAccount1));
+                .save(newTransferTransaction(cosAccount, ssarAccount1, accountRepository));
 }
 ```
 ## 테스트 더미 데이터 (서비스)

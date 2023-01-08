@@ -1,6 +1,8 @@
 package shop.mtcoding.bank.dto.account;
 
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import lombok.Getter;
@@ -12,8 +14,10 @@ public class AccountReqDto {
     @Setter
     @Getter
     public static class AccountSaveReqDto {
+        @NotNull
         @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
         private Long number;
+        @NotNull
         @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
         private Long password;
 
@@ -30,23 +34,31 @@ public class AccountReqDto {
     @Getter
     @Setter
     public static class AccountDepositReqDto {
+        @NotNull
         @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
         private Long number;
+        @NotNull
         private Long amount;
+        @NotEmpty
         @Pattern(regexp = "^(DEPOSIT)$", message = "구분값을 정확히 입력해주세요")
         private String gubun;
-        @Pattern(regexp = "^[0-9]{3}-[0-9]{4}-[0-9]{4}$", message = "전화번호 양식에 맞게 입력해주세요")
+        @NotEmpty
+        @Pattern(regexp = "^[0-9]{3}[0-9]{4}[0-9]{4}$", message = "전화번호 양식에 맞게 입력해주세요")
         private String tel;
     }
 
     @Getter
     @Setter
     public static class AccountWithdrawReqDto {
+        @NotNull
         @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
         private Long number;
+        @NotNull
         @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
         private Long password;
+        @NotNull
         private Long amount;
+        @NotEmpty
         @Pattern(regexp = "^(WITHDRAW)$", message = "구분값을 정확히 입력해주세요")
         private String gubun;
     }
@@ -54,13 +66,18 @@ public class AccountReqDto {
     @Getter
     @Setter
     public static class AccountTransferReqDto {
+        @NotNull
         @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
         private Long withdrawNumber;
+        @NotNull
         @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
         private Long depositNumber;
+        @NotNull
         @Digits(integer = 4, fraction = 4, message = "숫자 4자리로 작성해주세요")
         private Long withdrawPassword;
+        @NotNull
         private Long amount;
+        @NotEmpty
         @Pattern(regexp = "^(TRANSFER)$", message = "구분값을 정확히 입력해주세요")
         private String gubun;
     }

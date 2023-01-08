@@ -86,7 +86,7 @@ public class TransactionApiControllerTest extends DummyObject {
                 Transaction withdrawTransaction1 = transactionRepository
                                 .save(newWithdrawTransaction(ssarAccount1, accountRepository));
                 Transaction depositTransaction1 = transactionRepository
-                                .save(newDepositTransaction(cosAccount, accountRepository));
+                                .save(newDepositTransaction(ssarAccount1, accountRepository));
                 Transaction transferTransaction1 = transactionRepository
                                 .save(newTransferTransaction(ssarAccount1, cosAccount, accountRepository));
                 Transaction transferTransaction2 = transactionRepository

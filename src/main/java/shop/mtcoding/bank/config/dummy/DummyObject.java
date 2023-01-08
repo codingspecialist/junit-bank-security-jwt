@@ -120,6 +120,7 @@ public class DummyObject {
 
     protected Transaction newDepositTransaction(Account account, AccountRepository accountRepository) {
         account.deposit(100L);
+        // 더티체킹이 안되기 때문에!!
         if (accountRepository != null) {
             accountRepository.save(account);
         }
@@ -139,6 +140,7 @@ public class DummyObject {
 
     protected Transaction newWithdrawTransaction(Account account, AccountRepository accountRepository) {
         account.withdraw(100L);
+        // 더티체킹이 안되기 때문에!!
         if (accountRepository != null) {
             accountRepository.save(account);
         }
@@ -159,6 +161,7 @@ public class DummyObject {
             AccountRepository accountRepository) {
         withdrawAccount.withdraw(100L);
         depositAccount.deposit(100L);
+        // 더티체킹이 안되기 때문에!!
         if (accountRepository != null) {
             accountRepository.save(withdrawAccount);
             accountRepository.save(depositAccount);
