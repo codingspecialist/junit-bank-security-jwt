@@ -1,7 +1,5 @@
 # Bank API 문서
 
-***
-
 ### 회원가입 : POST
 - http://localhost:8080/api/join
 - body

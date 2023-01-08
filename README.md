@@ -1,10 +1,10 @@
 # 입출금이체 프로그램
 
-### 준비 github 자료
+## 준비 github 자료
 - https://github.com/codingspecialist/JUNIT5-Security-Lecture
 - https://github.com/codingspecialist/junit-bank-security-jwt
 
-### 진행된 테스트
+## 진행된 테스트
 
 - UserRepository findByUsername() 테스트 - 통과
 - UserService 회원가입 테스트 - 통과
@@ -24,6 +24,8 @@ https://docs.spring.io/spring-security/reference/servlet/authorization/authorize
 - Account 목록보기 (완)
 - Transaction 목록보기 (완)
 
+## 포스트맨 공유
+- https://www.postman.com/winter-firefly-4359/workspace/bank-security-junit/collection/6436049-f674b2a8-7400-4a6e-be46-162ff42727e2?action=share&creator=6436049
 
 ## 화면설계
 [ux-design](./class-note/ux-design.pdf)
