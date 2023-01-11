@@ -57,7 +57,7 @@ https://docs.spring.io/spring-security/reference/servlet/authorization/authorize
 
 ## 기술스택
 - Springboot 2.7.6
-- JPA (JPQL)
+- JPA
 - JWT
 - Security
 - MariaDB (프로덕션)
