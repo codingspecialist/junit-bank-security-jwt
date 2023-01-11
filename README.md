@@ -66,9 +66,9 @@ https://docs.spring.io/spring-security/reference/servlet/authorization/authorize
 - Junit5
 
 ## 테이블 스키마
-- users
-- account
-- transaction
+- user_tb
+- account_tb
+- transaction_tb
 
 ```sql
 create database metadb;
