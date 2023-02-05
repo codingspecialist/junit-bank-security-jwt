@@ -258,6 +258,7 @@ public class AccountServiceTest extends DummyObject {
         // given
         Long accountNumber = 1111L;
         Long userId = 1L;
+        Integer page = 0;
 
         // stub1
         User ssar = newMockUser(1L, "ssar", "쌀");
@@ -281,7 +282,7 @@ public class AccountServiceTest extends DummyObject {
         when(transactionRepository.findTransactionList(any(), any(), any())).thenReturn(transactions);
 
         // when
-        AccountDetailRespDto accountDetailRespDto = accountService.계좌상세보기(accountNumber, userId);
+        AccountDetailRespDto accountDetailRespDto = accountService.계좌상세보기(accountNumber, userId, page);
         String responseBody = om.writeValueAsString(accountDetailRespDto);
         log.debug("디버그 : " + responseBody);
 

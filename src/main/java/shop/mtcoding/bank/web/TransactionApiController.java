@@ -21,14 +21,14 @@ import shop.mtcoding.bank.service.TransactionService;
 public class TransactionApiController {
     private final TransactionService transactionService;
 
-    @GetMapping("/s/account/{accountNumber}/transaction")
+    @GetMapping("/s/account/{number}/transaction")
     public ResponseEntity<?> findTransactionList(
-            @PathVariable Long accountNumber,
+            @PathVariable Long number,
             @RequestParam(value = "gubun", defaultValue = "ALL") String gubun,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @AuthenticationPrincipal LoginUser loginUser) {
         TransactionListRespDto transactionListRespDto = transactionService.입출금목록보기(loginUser.getUser().getId(),
-                accountNumber, gubun, page);
+                number, gubun, page);
         return new ResponseEntity<>(new ResponseDto<>(1, "입출금목록보기 성공", transactionListRespDto), HttpStatus.OK);
     }
 }

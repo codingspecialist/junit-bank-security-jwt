@@ -200,13 +200,12 @@ public class AccountService {
     }
 
     // 계좌상세보기
-    public AccountDetailRespDto 계좌상세보기(Long accountNumber, Long userId) {
+    public AccountDetailRespDto 계좌상세보기(Long number, Long userId, Integer page) {
         // 1. 구분값, 페이지 고정
         String gubun = "ALL";
-        Integer page = 0;
 
         // 2. 계좌 확인
-        Account accountPS = accountRepository.findByNumber(accountNumber).orElseThrow(
+        Account accountPS = accountRepository.findByNumber(number).orElseThrow(
                 () -> new CustomApiException("계좌를 찾을 수 없습니다"));
 
         // 3. 계좌 소유자 확인

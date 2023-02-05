@@ -48,7 +48,7 @@ public class JwtAuthorizationFilterTest {
 
         // when
         ResultActions resultActions = mvc
-                .perform(get("/api/user/hello/test"));
+                .perform(get("/api/s/hello/test"));
 
         // then
         resultActions.andExpect(status().isUnauthorized());

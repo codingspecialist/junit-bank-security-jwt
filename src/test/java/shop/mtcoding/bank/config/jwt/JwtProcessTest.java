@@ -4,41 +4,46 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import shop.mtcoding.bank.config.auth.LoginUser;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserEnum;
 
 public class JwtProcessTest {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
-    @Test
-    public void create_test() {
+    private String createToken() {
         // given
-        User user = User.builder().id(1L).role(UserEnum.CUSTOMER).build();
+        User user = User.builder().id(1L).role(UserEnum.ADMIN).build();
         LoginUser loginUser = new LoginUser(user);
 
         // when
-        String token = JwtProcess.create(loginUser);
-        log.debug("테스트 : " + token);
+        String jwtToken = JwtProcess.create(loginUser);
+        return jwtToken;
+    }
+
+    @Test
+    public void create_test() throws Exception {
+        // given
+
+        // when
+        String jwtToken = createToken();
+        System.out.println("테스트 : " + jwtToken);
 
         // then
-        assertTrue(token.startsWith(JwtVO.TOKEN_PREFIX));
+        assertTrue(jwtToken.startsWith(JwtVO.TOKEN_PREFIX));
     }
 
     @Test
     public void verify_test() throws Exception {
         // given
-        // Bearer 붙이면 테스트 실패함
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOm51bGwsInJvbGUiOiJDVVNUT01FUiIsImlkIjoxLCJleHAiOjE2NzE0NjczNDN9.lt4rzDDOypJJV5syGjJ0YfgKCYiL4ooUzmCpEX_pqPQIFTEAZ9DUkTHll0czF0p8TOTnmDuAt83gCL-0l0bonQ";
-
+        String token = createToken(); // Bearer 제거해서 처리하기
+        String jwtToken = token.replace(JwtVO.TOKEN_PREFIX, "");
         // when
-        LoginUser loginUser = JwtProcess.verify(token);
-        log.debug("테스트 : " + loginUser.getUser().getId());
+        LoginUser loginUser = JwtProcess.verify(jwtToken);
+        System.out.println("테스트 : " + loginUser.getUser().getId());
+        System.out.println("테스트 : " + loginUser.getUser().getRole().name());
 
         // then
         assertThat(loginUser.getUser().getId()).isEqualTo(1L);
+        assertThat(loginUser.getUser().getRole()).isEqualTo(UserEnum.ADMIN);
     }
 }

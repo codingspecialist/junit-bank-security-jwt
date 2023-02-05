@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -53,10 +54,14 @@ public class SecurityConfig {
         http.cors().configurationSource(configurationSource()); // cors 재정의
 
         // ExcpetionTranslationFilter (인증 확인 필터)
-        http.exceptionHandling().authenticationEntryPoint(
-                (request, response, authException) -> {
-                    CustomResponseUtil.unAuthorized(response, "로그인 해주세요");
-                });
+        http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
+            CustomResponseUtil.fail(response, "로그인을 진행해 주세요", HttpStatus.UNAUTHORIZED);
+        });
+
+        // 권한 실패
+        http.exceptionHandling().accessDeniedHandler((request, response, e) -> {
+            CustomResponseUtil.fail(response, "권한이 없습니다", HttpStatus.FORBIDDEN);
+        });
 
         /*
          * SessionCreationPolicy.STATELESS

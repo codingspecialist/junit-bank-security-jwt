@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import javax.persistence.EntityManager;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -52,10 +54,13 @@ public class AccountApiControllerTest extends DummyObject {
         private AccountRepository accountRepository;
         @Autowired
         private TransactionRepository transactionRepository;
+        @Autowired
+        private EntityManager em;
 
         @BeforeEach
         public void setUp() {
                 dataSetting();
+                em.clear();
         }
 
         // 계좌 비밀번호 BCrypt 인코딩 (숙제)
@@ -192,10 +197,11 @@ public class AccountApiControllerTest extends DummyObject {
 
                 // given
                 Long accountNumber = 1111L;
+                String page = "0";
 
                 // when
                 ResultActions resultActions = mvc
-                                .perform(get("/api/s/account/" + accountNumber));
+                                .perform(get("/api/s/account/" + accountNumber).param("page", page));
                 String responseBody = resultActions.andReturn().getResponse().getContentAsString();
                 log.debug("디버그 : " + responseBody);
 
@@ -208,14 +214,16 @@ public class AccountApiControllerTest extends DummyObject {
                 User cos = userRepository.save(newUser("cos", "코스,"));
                 User love = userRepository.save(newUser("love", "러브"));
                 User admin = userRepository.save(newUser("admin", "관리자"));
+
                 Account ssarAccount1 = accountRepository.save(newAccount(1111L, ssar));
                 Account cosAccount = accountRepository.save(newAccount(2222L, cos));
                 Account loveAccount = accountRepository.save(newAccount(3333L, love));
                 Account ssarAccount2 = accountRepository.save(newAccount(4444L, ssar));
+
                 Transaction withdrawTransaction1 = transactionRepository
                                 .save(newWithdrawTransaction(ssarAccount1, accountRepository));
                 Transaction depositTransaction1 = transactionRepository
-                                .save(newDepositTransaction(ssarAccount1, accountRepository));
+                                .save(newDepositTransaction(cosAccount, accountRepository));
                 Transaction transferTransaction1 = transactionRepository
                                 .save(newTransferTransaction(ssarAccount1, cosAccount, accountRepository));
                 Transaction transferTransaction2 = transactionRepository

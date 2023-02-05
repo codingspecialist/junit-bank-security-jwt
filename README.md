@@ -1,8 +1,11 @@
 # 입출금이체 프로그램
 
-## 준비 github 자료
+## 수업전 준비한 공부 코드
 - https://github.com/codingspecialist/JUNIT5-Security-Lecture
+## 수업을 위해서 만들어진 코드
 - https://github.com/codingspecialist/junit-bank-security-jwt
+## 수업진행하면서 만들어진 코드
+- https://github.com/codingspecialist/junit-bank-class
 
 ## 진행된 테스트
 
