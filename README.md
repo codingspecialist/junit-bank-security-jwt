@@ -28,7 +28,7 @@ https://docs.spring.io/spring-security/reference/servlet/authorization/authorize
 - Transaction 목록보기 (완)
 
 ## 포스트맨 공유
-- https://www.postman.com/winter-firefly-4359/workspace/bank-security-junit/collection/6436049-f674b2a8-7400-4a6e-be46-162ff42727e2?action=share&creator=6436049
+- class-note에 bank.postman_collection.json 파일
 
 ## 화면설계
 [ux-design](./class-note/ux-design.pdf)
