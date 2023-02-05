@@ -94,7 +94,7 @@ public class SecurityConfig {
 
         configuration.addAllowedOriginPattern("*"); // 프론트 서버의 주소 등록
         configuration.setAllowCredentials(true); // 클라이언트에서 쿠키 요청 허용
-
+        configuration.addExposedHeader("Authorization");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
