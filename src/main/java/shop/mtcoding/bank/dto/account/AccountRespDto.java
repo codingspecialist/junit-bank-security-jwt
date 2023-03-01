@@ -83,7 +83,7 @@ public class AccountRespDto {
             private Long id;
             private String gubun; // 입금
             private String sender; // ATM
-            private String reciver;
+            private String receiver;
             private Long amount;
             @JsonIgnore
             private Long depositAccountBalance;
@@ -94,7 +94,7 @@ public class AccountRespDto {
                 this.id = transaction.getId();
                 this.gubun = transaction.getGubun().getValue();
                 this.sender = transaction.getSender();
-                this.reciver = transaction.getReciver();
+                this.receiver = transaction.getReceiver();
                 this.amount = transaction.getAmount();
                 this.depositAccountBalance = transaction.getDepositAccountBalance();
                 this.tel = transaction.getTel();
@@ -124,7 +124,7 @@ public class AccountRespDto {
             private Long id;
             private String gubun; // 출금
             private String sender; // 출금 계좌번호
-            private String reciver; // ATM
+            private String receiver; // ATM
             private Long amount;
             private String createdAt;
 
@@ -132,7 +132,7 @@ public class AccountRespDto {
                 this.id = transaction.getId();
                 this.gubun = transaction.getGubun().getValue();
                 this.sender = transaction.getSender();
-                this.reciver = transaction.getReciver();
+                this.receiver = transaction.getReceiver();
                 this.amount = transaction.getAmount();
                 this.createdAt = CustomDateUtil.toStringFormat(transaction.getCreatedAt());
             }
@@ -160,7 +160,7 @@ public class AccountRespDto {
             private Long id;
             private String gubun; // 출금
             private String sender; // 출금 계좌번호
-            private String reciver; // ATM
+            private String receiver; // ATM
             private Long amount;
             @JsonIgnore
             private Long depositAccountBalance;
@@ -170,7 +170,7 @@ public class AccountRespDto {
                 this.id = transaction.getId();
                 this.gubun = transaction.getGubun().getValue();
                 this.sender = transaction.getSender();
-                this.reciver = transaction.getReciver();
+                this.receiver = transaction.getReceiver();
                 this.amount = transaction.getAmount();
                 this.depositAccountBalance = transaction.getDepositAccountBalance();
                 this.createdAt = CustomDateUtil.toStringFormat(transaction.getCreatedAt());
@@ -204,7 +204,7 @@ public class AccountRespDto {
             private Long amount;
 
             private String sender;
-            private String reciver;
+            private String receiver;
 
             private String tel;
             private String createdAt;
@@ -215,7 +215,7 @@ public class AccountRespDto {
                 this.gubun = transaction.getGubun().getValue();
                 this.amount = transaction.getAmount();
                 this.sender = transaction.getSender();
-                this.reciver = transaction.getReciver();
+                this.receiver = transaction.getReceiver();
                 this.createdAt = CustomDateUtil.toStringFormat(transaction.getCreatedAt());
                 this.tel = transaction.getTel() == null ? "없음" : transaction.getTel();
 

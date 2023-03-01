@@ -2,19 +2,15 @@ package shop.mtcoding.bank.domain.transaction;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -37,11 +33,9 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private Account withdrawAccount; // 출금 계좌
 
-    @JoinColumn(foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private Account depositAccount; // 입금 계좌
 
@@ -56,7 +50,7 @@ public class Transaction {
     private TransactionEnum gubun; // 입금(ATM으로 부터), 출금(ATM으로), 이체(다른계좌로)
 
     private String sender; // 계좌가 사라져도 로그는 남아야 한다.
-    private String reciver; // 계좌가 사라져도 로그는 남아야 한다.
+    private String receiver; // 계좌가 사라져도 로그는 남아야 한다.
     private String tel; // 무통장 입금시 전화번호 필요함 (입금이 잘못될 경우 연락처가 필요하다)
 
     @LastModifiedDate
@@ -70,7 +64,7 @@ public class Transaction {
     @Builder
     public Transaction(Long id, Account withdrawAccount, Account depositAccount, Long amount,
             Long withdrawAccountBalance, Long depositAccountBalance, TransactionEnum gubun, String sender,
-            String reciver, String tel, LocalDateTime updatedAt, LocalDateTime createdAt) {
+            String receiver, String tel, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
         this.withdrawAccount = withdrawAccount;
         this.depositAccount = depositAccount;
@@ -79,7 +73,7 @@ public class Transaction {
         this.depositAccountBalance = depositAccountBalance;
         this.gubun = gubun;
         this.sender = sender;
-        this.reciver = reciver;
+        this.receiver = receiver;
         this.tel = tel;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;

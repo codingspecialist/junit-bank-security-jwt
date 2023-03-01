@@ -47,7 +47,7 @@ public class TransactionRepositoryTest extends DummyObject {
                 List<Transaction> transactionListPS = transactionRepository.findTransactionList(userId, "DEPOSIT", 0);
                 log.debug("디버그 : size : " + transactionListPS.size());
                 log.debug("디버그 : " + transactionListPS.get(1).getSender());
-                log.debug("디버그 : " + transactionListPS.get(1).getReciver());
+                log.debug("디버그 : " + transactionListPS.get(1).getReceiver());
                 log.debug("디버그 : " + transactionListPS.get(1).getDepositAccountBalance());
 
                 // then
@@ -63,7 +63,7 @@ public class TransactionRepositoryTest extends DummyObject {
                 List<Transaction> transactionListPS = transactionRepository.findTransactionList(userId, "WITHDRAW", 0);
                 log.debug("디버그 : size : " + transactionListPS.size());
                 log.debug("디버그 : " + transactionListPS.get(2).getSender());
-                log.debug("디버그 : " + transactionListPS.get(2).getReciver());
+                log.debug("디버그 : " + transactionListPS.get(2).getReceiver());
                 log.debug("디버그 : " + transactionListPS.get(2).getWithdrawAccountBalance());
 
                 // then
@@ -79,7 +79,7 @@ public class TransactionRepositoryTest extends DummyObject {
                 List<Transaction> transactionListPS = transactionRepository.findTransactionList(userId, "ALL", 0);
                 log.debug("디버그 : size : " + transactionListPS.size());
                 log.debug("디버그 : " + transactionListPS.get(4).getSender());
-                log.debug("디버그 : " + transactionListPS.get(4).getReciver());
+                log.debug("디버그 : " + transactionListPS.get(4).getReceiver());
                 log.debug("디버그 : " + transactionListPS.get(4).getWithdrawAccountBalance());
                 log.debug("디버그 : " + transactionListPS.get(4).getDepositAccountBalance());
 

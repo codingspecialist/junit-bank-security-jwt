@@ -31,7 +31,7 @@ public class TransactionRespDto {
             private Long amount;
 
             private String sender;
-            private String reciver;
+            private String receiver;
 
             private String tel;
             private String createdAt;
@@ -42,7 +42,7 @@ public class TransactionRespDto {
                 this.gubun = transaction.getGubun().getValue();
                 this.amount = transaction.getAmount();
                 this.sender = transaction.getSender();
-                this.reciver = transaction.getReciver();
+                this.receiver = transaction.getReceiver();
                 this.createdAt = CustomDateUtil.toStringFormat(transaction.getCreatedAt());
                 this.tel = transaction.getTel() == null ? "없음" : transaction.getTel();
 
